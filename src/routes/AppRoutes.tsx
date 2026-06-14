@@ -5,25 +5,29 @@ import Login from "@/pages/Login";
 import { ResetPassword } from "@/pages/Reset-password";
 import { Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoutes";
+import { RegisterUser } from "@/pages/Register";
 
 export default function AppRoutes() {
     return (
         <Routes>
+            <Route path='/login' element={<Login />} />
+            <Route path='/CadastroUsuario' element={<RegisterUser />} />
+            <Route path='/esqucer-senha' element={<ForgotPassword />} />
+            <Route path='/reset-password' element={<ResetPassword />} />
+
             <Route path='/' element={
                 <PrivateRoute>
                     <HomePage />
                 </PrivateRoute>
             } />
 
-            <Route path='/login' element={<Login />} />
             <Route path='/dashboard' element={
                 <PrivateRoute>
                     <Dashboard />
                 </PrivateRoute>} />
 
 
-            <Route path='/esqucer-senha' element={<ForgotPassword />} />
-            <Route path='/reset-password' element={<ResetPassword />} />
+            
 
         </Routes>
     )
