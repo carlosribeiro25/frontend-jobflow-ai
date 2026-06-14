@@ -30,7 +30,7 @@ export default function Login() {
 
             Cookies.set('token', data.token)
 
-            navigate('/dashboard')
+            navigate('/')
 
         } catch (error: any) {
             console.error("Erro:", error.response?.data || error.message)
@@ -45,7 +45,7 @@ export default function Login() {
     return (
         <div className="">
             
-            <section className="border-be-blue-950 rounded shadow flex flex-col w-80 m-auto justify-items-center justify-center px-2 py-4 mt-20">
+            <section className="border-be-blue-950 bg-gray-100 rounded shadow flex flex-col w-80 m-auto justify-items-center justify-center px-2 py-4 mt-20">
                 <h2 className="mt-1 font-bold text-lg justify-center sm:text-2xl flex justify-items-center py-2"> Jobflow AI</h2>
 
                 <form className="px-1"
