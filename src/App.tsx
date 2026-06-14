@@ -1,8 +1,12 @@
+import AuthProvider from "./pages/AuthLogin";
+import AppRoutes from "./routes/AppRoutes";
+
 export default function App() {
   return (
     <>
-    <h1>Bem-vindo ao Jobflow Ai</h1>
-    
+    <AuthProvider>
+      <AppRoutes/>
+    </AuthProvider>
     </>
   )
 }
