@@ -1,6 +1,18 @@
 import { useState } from "react"
 import { useForgotPassword } from "@/modules/auth/hooks/useForgotPassword"
 import { isAxiosError } from "axios"
+import {
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/@/components/ui/card";
+import { Input } from "@/@/components/ui/input";
+import { Button } from "@/@/components/ui/button";
+import Alert from '@mui/material/Alert';
+
 
 export function ForgotPassword() {
 
@@ -20,25 +32,39 @@ export function ForgotPassword() {
 
     return (
         <div>
-            <h1> Esqueci a senha</h1>
 
-            { isSuccess ? (
-                <p>Se o email existir em nossa base, voce receberá as instruções em breve</p>
+            {isSuccess ? (
+                <Alert severity="info">Voçe receberá as instruções no seu email</Alert>
+            ) : (
+                <Card className="w-90 md:w-lg  m-auto mt-8">
+                    <CardHeader>
+                        <CardTitle>Recupere sua senha</CardTitle>
+                        <CardDescription>Informe seu email para receber as intruções.</CardDescription>
 
-            ): (
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="email"> E-mail</label>
-                    <input
-                    value={email}
-                    type="email" name="email" 
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    placeholder="Digite seu email*"/>
+                    </CardHeader>
+                    <CardContent >    
+                            <form onSubmit={handleSubmit}>
+                                <div className="flex gap-1">
+                                    <Input
+                                        className="outline-none sm:text-base"
+                                        value={email}
+                                        type="email"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                        placeholder="Digite seu email aqui..."
+                                    />
+                                    <CardAction>
+                                        <Button type="submit" disabled={isPending}>{isPending ? 'Enviando...' : 'Enviar'}</Button>
+                                    </CardAction>
 
-                    { errorMessage && <p role="alert">{errorMessage}</p>}
+                                </div>
 
-                    <button type="submit" disabled={isPending}>{ isPending ? 'Enviando...' : 'Enviar instruções'}</button>
-                </form>
+
+                                {errorMessage && <p role="alert">{errorMessage}</p>}
+
+                            </form>
+                    </CardContent>
+                </Card>
             )}
         </div>
     )
