@@ -107,7 +107,7 @@ export function ResetPassword() {
                             {displayError && <p role="alert">{displayError}</p>}
 
                             <button type="submit"
-                                className="py-2 mt-2 text-amber-50 px-2 bg-blue-400 w-full rounded"
+                                className="py-2 mt-2 text-amber-50 px-2 bg-foreground w-full rounded"
                                 disabled={isPending}> {isPending ? 'Salvando...' : 'Redefinir senha'}</button>
                         </form>
 
