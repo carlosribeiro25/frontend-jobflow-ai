@@ -1,10 +1,10 @@
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
-export default function AlertSuccess() {
+export default function AlertError() {
   return (
     <Stack sx={{ width: '100%' }} spacing={2}>
-      <Alert severity="success">This is a success Alert.</Alert>
+      <Alert severity="error">Credenciais inválidas,verfifque se o email ou senha estao corretos.</Alert>
     </Stack>
   );
 }
