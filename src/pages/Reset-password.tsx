@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { isAxiosError } from "axios"
 import { useResetPaasword } from "@/modules/auth/hooks/useResetPassword"
 import {
@@ -10,7 +10,6 @@ import {
 } from "@/@/components/ui/card"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
 
 export function ResetPassword() {
     const [searchParams] = useSearchParams()
@@ -48,12 +47,12 @@ export function ResetPassword() {
     const displayError = localError ?? serverError
 
     return (
-        <div>
+        <div className="flex min-h-screen items-center justify-center bg-gray-50">
 
             {isSuccess ? (
                 <p>Senha redefinida com sucesso.</p>
             ) : (
-                <Card className="box-content w-90 m-auto mt-2">
+                <Card className="box-content w-90 m-auto">
                     <CardHeader>
                         <CardTitle className="text-center sm:text-2xl ">
                             <h1>Redefina sua senha</h1>
@@ -109,6 +108,11 @@ export function ResetPassword() {
                             <button type="submit"
                                 className="py-2 mt-2 text-amber-50 px-2 bg-foreground w-full rounded"
                                 disabled={isPending}> {isPending ? 'Salvando...' : 'Redefinir senha'}</button>
+
+                            <div className="text-blue-400 text-center mt-2">
+                                
+                                <Link className="" to='/login'>Voltar para login</Link>
+                            </div>
                         </form>
 
                     </CardContent>
