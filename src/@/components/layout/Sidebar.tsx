@@ -5,6 +5,7 @@ export default function AppSidebar() {
     return (
             <Sidebar collapsible="icon">
                 <SidebarHeader>
+                    
                     <SidebarMenu>
                         <SidebarMenuItem>
                            <SidebarMenuButton>
