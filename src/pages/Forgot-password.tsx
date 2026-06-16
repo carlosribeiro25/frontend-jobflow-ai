@@ -30,12 +30,12 @@ export function ForgotPassword() {
         : null
 
     return (
-        <div>
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
 
             {isSuccess ? (
                 <Alert severity="info">Voçe receberá as instruções no seu email</Alert>
             ) : (
-                <Card className="w-90 md:w-lg  m-auto mt-8">
+                <Card className="w-90 md:w-lg  m-auto">
                     <CardHeader>
                         <CardTitle>Recupere sua senha</CardTitle>
                         <CardDescription>Informe seu email para receber as intruções.</CardDescription>
