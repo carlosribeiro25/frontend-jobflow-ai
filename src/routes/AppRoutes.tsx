@@ -6,6 +6,7 @@ import { ResetPassword } from "@/pages/Reset-password";
 import { Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoutes";
 import { RegisterUser } from "@/pages/Register";
+import { WhatsappConnect } from "@/@/components/layout/WhatsappConnect";
 
 export default function AppRoutes() {
     return (
@@ -25,6 +26,13 @@ export default function AppRoutes() {
                 <PrivateRoute>
                     <Dashboard />
                 </PrivateRoute>} />
+
+            <Route path="/conectWhatsapp" element={
+                <PrivateRoute>
+                    <WhatsappConnect/>
+                </PrivateRoute>
+            }
+            />
 
 
             
