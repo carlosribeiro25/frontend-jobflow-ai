@@ -13,7 +13,7 @@ export default function AppRoutes() {
         <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/CadastroUsuario' element={<RegisterUser />} />
-            <Route path='/esqucer-senha' element={<ForgotPassword />} />
+            <Route path='/esquecer-senha' element={<ForgotPassword />} />
             <Route path='/reset-password' element={<ResetPassword />} />
 
             <Route path='/' element={
