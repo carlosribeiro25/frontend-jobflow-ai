@@ -8,6 +8,7 @@ import { useAuth } from "./AuthLogin";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
+
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -32,6 +33,9 @@ export default function Login() {
             })
 
             Cookies.set('token', data.token)
+            if (data.refreshToken) {
+                Cookies.set('refreshToken', data.refreshToken)
+            }
 
             navigate('/')
 
