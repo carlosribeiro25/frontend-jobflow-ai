@@ -1,13 +1,12 @@
 import { api } from "@/services/api";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import AlertWarning from "@/@/components/ui/alert-warning";
-import AlertError from "@/@/components/ui/alert-error";
 import Cookies from 'js-cookie'
 import { useAuth } from "./AuthLogin";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
+import { useToast } from "@/modules/auth/hooks/useToast";
+import { ToastContainer } from "@/@/components/ui/toast-container";
 
 export default function Login() {
     const [email, setEmail] = useState("")
@@ -15,7 +14,7 @@ export default function Login() {
     const navigate = useNavigate()
     const { login } = useAuth()
     const [showPassword, setShowPassword] = useState(false)
-    const [alertType, setAlertType] = useState<'error' | 'warning' | null>(null)
+    const { toasts, addToast, removeToast } = useToast();
 
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -42,22 +41,31 @@ export default function Login() {
         } catch (error: any) {
             console.error("Erro:", error.response?.data || error.message)
             if (error.response?.status === 400) {
-                setAlertType('error')
+                addToast({
+                    message: error.response?.data?.message || 'Credenciais invalidas, verifique se o email ou senha estão corretos',
+                    type: 'error',
+                    duration: 4000
+                })
             } else {
-                setAlertType('warning')
+                addToast({
+                    message: error.response?.data?.message || 'Não foi possivel fazer login agora, tente novamente.',
+                    type: 'warning',
+                    duration: 4000
+                })
             }
+
         }
 
     }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <ToastContainer toasts={toasts} removeToast={removeToast} />
             <section className="border-be-blue-950 bg-gray-100 rounded shadow flex flex-col w-80 m-auto justify-items-center justify-center px-2 py-4">
                 <h2 className="mt-1 font-bold text-lg justify-center sm:text-2xl flex justify-items-center text-fuchsia-700 py-2"> Jobflow AI</h2>
 
                 <form className="px-1"
                     onSubmit={handleSubmit}>
-                    {alertType === 'error' && <AlertError />}
-                    {alertType === 'warning' && <AlertWarning />}
+
                     <div className="flex flex-col">
                         <label className="py-2" htmlFor="email">Email </label>
 
@@ -85,7 +93,7 @@ export default function Login() {
                             required
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <button className=" absolute right-2 mt-12 text-gray-500 "
+                        <button type="button" className=" absolute right-2 mt-12 text-gray-500 "
                             onClick={() => setShowPassword(prev => !prev)}
                         >
                             {showPassword ? (
@@ -98,11 +106,12 @@ export default function Login() {
 
                     <div className="justify-center justify-items-center">
                         <button className="text-amber-50 font-semibold bg-foreground w-full mt-3 rounded px-2 py-2" type="submit">Acessar</button>
+
                     </div>
 
                     <div className="flex justify-between mt-2 text-blue-600">
                         <Link to='/CadastroUsuario'>Ja tem cadastro?</Link>
-                        <Link to='/esqucer-senha'>Esqueceu a senha?</Link>
+                        <Link to='/esquecer-senha'>Esqueceu a senha?</Link>
                     </div>
 
                 </form>
