@@ -7,6 +7,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useToast } from "@/modules/auth/hooks/useToast";
 import { ToastContainer } from "@/@/components/ui/toast-container";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/@/components/ui/card";
+import { Button } from "@/@/components/ui/button";
+import { Label } from "@/@/components/ui/label";
 
 export default function Login() {
     const [email, setEmail] = useState("")
@@ -58,65 +61,77 @@ export default function Login() {
 
     }
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="md:w-sm overflow-hidden p-10 md:p-12 lg:w-md justify-center m-auto  items-center">
             <ToastContainer toasts={toasts} removeToast={removeToast} />
-            <section className="border-be-blue-950 bg-gray-100 rounded shadow flex flex-col w-80 m-auto justify-items-center justify-center px-2 py-4">
-                <h2 className="mt-1 font-bold text-lg justify-center sm:text-2xl flex justify-items-center text-fuchsia-700 py-2"> Jobflow AI</h2>
+            <Card >
+                <h1 className="mt-1 font-bold text-lg justify-center sm:text-2xl flex justify-items-center text-fuchsia-700 py-2"> Jobflow AI</h1>
+                <CardHeader >
+                    <CardTitle>Faça login na sua conta</CardTitle>
 
-                <form className="px-1"
-                    onSubmit={handleSubmit}>
+                    <CardDescription>Insira seu e-mail e senha para acessar sua conta.</CardDescription>
+                    <CardAction>
+                        <Link className="text-blue-700 " to="/CadastroUsuario">Cadastre-se</Link>
+                    </CardAction>
 
-                    <div className="flex flex-col">
-                        <label className="py-2" htmlFor="email">Email </label>
+                </CardHeader>
+                <CardContent>
+                    <form className="px-1"
+                        onSubmit={handleSubmit}>
 
-                        <input
-                            className="px-2 py-2 outline-none bg-gray-200 rounded"
-                            type="email"
-                            name="email"
-                            id="email"
-                            value={email}
-                            placeholder="Digite seu email*"
-                            required
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
+                        <div className="flex flex-col">
+                            <Label className="py-1" htmlFor="email">Email </Label>
 
-                    <div className="flex flex-col relative">
-                        <label className="py-2" htmlFor="password">Senha</label>
-                        <input
-                            className="px-2 py-2 outline-none bg-gray-200 rounded"
-                            type={showPassword ? "text" : "password"}
-                            name="password"
-                            id="password"
-                            value={password}
-                            placeholder="Digite sua senha*"
-                            required
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <button type="button" className=" absolute right-2 mt-12 text-gray-500 "
-                            onClick={() => setShowPassword(prev => !prev)}
-                        >
-                            {showPassword ? (
-                                <VisibilityIcon fontSize="small" />
-                            ) : (
-                                <VisibilityOffIcon fontSize="small" />
-                            )}
-                        </button>
-                    </div>
+                            <input
+                                className="px-2 py-2 outline-none bg-gray-200 rounded"
+                                type="email"
+                                name="email"
+                                id="email"
+                                value={email}
+                                placeholder="Digite seu email*"
+                                required
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
 
-                    <div className="justify-center justify-items-center">
-                        <button className="text-amber-50 font-semibold bg-foreground w-full mt-3 rounded px-2 py-2" type="submit">Acessar</button>
+                        <div className="flex flex-col relative">
+                            <div className="flex justify-between ">
+                                <Label className="py-2" htmlFor="password">Senha</Label>
+                                <Link className="mt-2 text-blue-500" to='/esquecer-senha'>Esqueceu a senha?</Link>
+                            </div>
+                            <input
+                                className="px-2 py-2 outline-none bg-gray-200 rounded"
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                id="password"
+                                value={password}
+                                placeholder="Digite sua senha*"
+                                required
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <button type="button" className=" absolute right-2 mt-10 text-gray-400 "
+                                onClick={() => setShowPassword(prev => !prev)}
+                            >
+                                {showPassword ? (
+                                    <VisibilityIcon fontSize="small" />
+                                ) : (
+                                    <VisibilityOffIcon fontSize="small" />
+                                )}
+                            </button>
+                        </div>
 
-                    </div>
+                        <div className="justify-center justify-items-center">
+                            <Button className="font-semibold w-full mt-3  px-2 py-2" type="submit">Conecte-se</Button>
+                        </div>
 
-                    <div className="flex justify-between mt-2 text-blue-600">
-                        <Link to='/CadastroUsuario'>Ja tem cadastro?</Link>
-                        <Link to='/esquecer-senha'>Esqueceu a senha?</Link>
-                    </div>
+                    </form>
+                </CardContent>
+            </Card>
+            {/* <section className="border-be-blue-950 bg-gray-100 rounded shadow flex flex-col w-80 m-auto justify-items-center justify-center px-2 py-4">
+                
 
-                </form>
+                
 
-            </section>
+            </section> */}
         </div>
     )
 }
