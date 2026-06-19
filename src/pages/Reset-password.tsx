@@ -70,7 +70,7 @@ export function ResetPassword() {
                                     onChange={(e) => setNewPassword(e.target.value)}
                                     required
                                     placeholder="Mínimo 6 caracteres*" />
-                                <button className=" absolute right-2 mt-8 text-gray-500 "
+                                <button type="button" className=" absolute right-2 mt-8 text-gray-500 "
                                     onClick={() => setShowPassword(prev => !prev)}
                                 >
                                     {showPassword ? (
@@ -92,7 +92,7 @@ export function ResetPassword() {
                                     required
                                     placeholder="Repita a senha*" />
 
-                                <button className="absolute right-2 mt-8 text-gray-500"
+                                <button type="button" className="absolute right-2 mt-8 text-gray-500"
                                     onClick={() => setConfirmShowPassword(prev => !prev)}
                                 >
                                     {confirmShowPassword ? (
