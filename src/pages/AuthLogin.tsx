@@ -1,57 +1,55 @@
-import { api } from "@/services/api";
-import { createContext, useContext, useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { AuthContext, type AuthSession, type AuthUserData } from "@/modules/auth/context/auth-context"
+import { api } from "@/services/api"
+import Cookies from "js-cookie"
+import { useCallback, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-interface AuthContextType {
-    user: any;
-    login: (token: string, userData: any) => void;
-    logout: () => Promise<void>
+const getStoredSession = (): AuthSession | null => {
+    const token = Cookies.get('token')
+    const storedUser = Cookies.get('user')
+
+    if (!token || !storedUser) {
+        return null
+    }
+
+    try {
+        return {
+            token,
+            userData: JSON.parse(storedUser) as AuthUserData,
+        }
+    } catch {
+        Cookies.remove('user')
+        return null
+    }
 }
 
-export const AuthContext = createContext<AuthContextType | null>(null)
-
-export default function AuthProvider({children} : { children: React.ReactNode}) {
-    const [ user, setUser ] = useState(() => {
-        const token = Cookies.get('token');
-        const userData = JSON.parse(Cookies.get('user') || "{}")
-        return token ? { token ,userData} : null;
-    })
-
+export default function AuthProvider({ children }: { children: React.ReactNode }) {
+    const [user, setUser] = useState<AuthSession | null>(getStoredSession)
     const navigate = useNavigate()
 
-    const login = useCallback((token: string, userData: any) => {
+    const login = useCallback((token: string, userData: AuthUserData) => {
         Cookies.set('token', token)
         Cookies.set('user', JSON.stringify(userData))
-        setUser( { token, userData})
-    }, []);
+        setUser({ token, userData })
+    }, [])
 
     const logout = useCallback(async () => {
-
         try {
             await api.post('/logout')
-
-        } catch (error: any) {
-           console.warn('Erro ao invalidar token') 
-        } finally{
+        } catch {
+            console.warn('Erro ao invalidar token')
+        } finally {
             Cookies.remove('token')
             Cookies.remove('user')
             sessionStorage.clear()
             setUser(null)
-            navigate('/login', { replace: true})
+            navigate('/login', { replace: true })
         }
     }, [navigate])
 
-    return ( 
-        <AuthContext.Provider value={{ user, login, logout}}>
+    return (
+        <AuthContext.Provider value={{ user, login, logout }}>
             {children}
         </AuthContext.Provider>
     )
-}
-export const useAuth = () => {
-    const context = useContext(AuthContext)
-    if(!context) {
-       throw new Error('useAuth must be used within an AuthProvider')
-    }
-    return context
 }

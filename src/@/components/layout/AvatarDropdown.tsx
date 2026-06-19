@@ -9,7 +9,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import { useAuth } from "@/pages/AuthLogin"
+import { useAuth } from "@/modules/auth/context/auth-context"
 
 export function AvatarMenu() {
     const { user, logout } = useAuth();

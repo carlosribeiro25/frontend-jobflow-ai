@@ -1,8 +1,9 @@
 import { api } from "@/services/api";
+import { useAuth } from "@/modules/auth/context/auth-context";
+import { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Cookies from 'js-cookie'
-import { useAuth } from "./AuthLogin";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useToast } from "@/modules/auth/hooks/useToast";
@@ -10,6 +11,21 @@ import { ToastContainer } from "@/@/components/ui/toast-container";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/@/components/ui/card";
 import { Button } from "@/@/components/ui/button";
 import { Label } from "@/@/components/ui/label";
+
+interface LoginResponse {
+    token: string;
+    refreshToken?: string;
+    user: {
+        email: string;
+        name: string;
+        phone?: string;
+        picture?: string;
+    };
+}
+
+interface ApiErrorResponse {
+    message?: string;
+}
 
 export default function Login() {
     const [email, setEmail] = useState("")
@@ -23,7 +39,7 @@ export default function Login() {
         e.preventDefault()
 
         try {
-            const { data } = await api.post('/login', {
+            const { data } = await api.post<LoginResponse>('/login', {
                 email, password
             })
 
@@ -41,17 +57,21 @@ export default function Login() {
 
             navigate('/')
 
-        } catch (error: any) {
-            console.error("Erro:", error.response?.data || error.message)
-            if (error.response?.status === 400) {
+        } catch (error: unknown) {
+            const apiError = error instanceof AxiosError
+                ? error
+                : new AxiosError<ApiErrorResponse>('Erro inesperado no login')
+
+            console.error("Erro:", apiError.response?.data || apiError.message)
+            if (apiError.response?.status === 400) {
                 addToast({
-                    message: error.response?.data?.message || 'Credenciais invalidas, verifique se o email ou senha estão corretos',
+                    message: apiError.response?.data?.message || 'Credenciais invalidas, verifique se o email ou senha estão corretos',
                     type: 'error',
                     duration: 4000
                 })
             } else {
                 addToast({
-                    message: error.response?.data?.message || 'Não foi possivel fazer login agora, tente novamente.',
+                    message: apiError.response?.data?.message || 'Não foi possivel fazer login agora, tente novamente.',
                     type: 'warning',
                     duration: 4000
                 })
@@ -126,12 +146,7 @@ export default function Login() {
                     </form>
                 </CardContent>
             </Card>
-            {/* <section className="border-be-blue-950 bg-gray-100 rounded shadow flex flex-col w-80 m-auto justify-items-center justify-center px-2 py-4">
-                
-
-                
-
-            </section> */}
+            
         </div>
     )
 }

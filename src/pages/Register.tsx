@@ -1,5 +1,6 @@
 import { api } from "@/services/api"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { AxiosError } from "axios"
 import React, { useState } from "react"
 import { useToast, } from "@/modules/auth/hooks/useToast"
 import { ToastContainer } from "@/@/components/ui/toast-container"
@@ -11,8 +12,24 @@ import { Input } from "@/@/components/ui/input"
 import { Button } from "@/@/components/ui/button"
 import { Link } from "react-router-dom"
 
-const registerUser = async (users: any) => {
-    const { data } = await api.post('/registerUser', users)
+interface RegisterUserPayload {
+    email: string
+    name: string
+    password: string
+    phone: string
+}
+
+interface RegisterUserResponse {
+    message?: string
+}
+
+interface RegisterErrorResponse {
+    duplicate?: string
+    message?: string
+}
+
+const registerUser = async (users: RegisterUserPayload) => {
+    const { data } = await api.post<RegisterUserResponse>('/registerUser', users)
     console.log(data)
     return data;
 }
@@ -25,8 +42,7 @@ const getErrorMessage = (data: unknown, fallback: string) => {
         if (typeof payload.message === 'string') return payload.message
         if (typeof payload.duplicate === 'string') return payload.duplicate
     }
-
-    return fallback
+    return fallback;
 }
 
 export function RegisterUser() {
@@ -56,17 +72,21 @@ export function RegisterUser() {
                 duration: 3000
             })
         },
-        onError: (error: any) => {
-            if (error.response?.status === 400) {
+        onError: (error: unknown) => {
+            const apiError = error instanceof AxiosError
+                ? error as AxiosError<RegisterErrorResponse>
+                : null
+
+            if (apiError?.response?.status === 400) {
                 addToast({
                     type: 'error',
-                    message: getErrorMessage(error.response?.data, 'Dados invalidos ou malformados.'),
+                    message: getErrorMessage(apiError.response?.data, 'Dados invalidos ou malformados.'),
                     duration: 3000
                 })
-            } else if (error.response?.status === 409) {
+            } else if (apiError?.response?.status === 409) {
                 addToast({
                     type: 'warning',
-                    message: getErrorMessage(error.response?.data, 'Este email ja esta cadastrado, tente com outro email.'),
+                    message: getErrorMessage(apiError.response?.data, 'Este email ja esta cadastrado, tente com outro email.'),
                     duration: 4000
                 })
             } else {
@@ -77,12 +97,10 @@ export function RegisterUser() {
                 })
             }
             return;
-
         }
+    })
 
-    });
-
-    const formatarTelefone = (valor: any) => {
+    const formatarTelefone = (valor: string) => {
         const numeros = valor.replace(/\D/g, "").slice(0, 11);
 
         if (numeros.length <= 10) {
@@ -110,7 +128,7 @@ export function RegisterUser() {
                 message: "As senhas nao coincidem",
                 duration: 3000
             })
-            return
+            return;
         }
 
         mutation.mutate({
@@ -124,7 +142,6 @@ export function RegisterUser() {
     return (
         <div className="md:w-sm overflow-hidden p-10 md:p-12 lg:w-md justify-center m-auto min-h-screen  items-center">
             <ToastContainer toasts={toasts} removeToast={removeToast} />
-
             <Card >
                 <CardHeader>
                     <CardTitle>Faça seu cadastro</CardTitle>
@@ -161,66 +178,63 @@ export function RegisterUser() {
 
                                 </div>
 
-                                    <div>
-                                        <Label className="py-1" htmlFor="phone">Telefone</Label>
-                                        <Input
-                                            type="tel"
-                                            maxLength={15}
-                                            value={form.phone}
-                                            onChange={handleChange}
-                                            name="phone"
-                                            placeholder="Informe seu telefone*"
-                                        />
-                                    </div>
-                                                                
-                                    <div className="relative">
-                                        <Label className="py-1" htmlFor="password">Senha</Label>
-                                        <Input
-                                            type={showPassword ? "text" : "password"}
-                                            value={form.password}
-                                            name="password"
-                                            placeholder="Crie sua senha*"
-                                            onChange={(e) => setForm({ ...form, password: e.target.value })}
-                                            required
-                                        />
-                                        <button type="button" className=" absolute right-2 mt-2 text-gray-400 "
-                                            onClick={() => setShowPassword(prev => !prev)}
-                                        >
-                                            {showPassword ? (
-                                                <VisibilityIcon fontSize="small" />
-                                            ) : (
-                                                <VisibilityOffIcon fontSize="small" />
-                                            )}
-                                        </button>
-                                    </div>
-                                
-                                    <div className="relative">
-                                        <Label className="py-1" htmlFor="confirmPassword">Confirmar senha</Label>
-                                        <Input
-                                            type={confirmShowPassword ? "text" : "password"}
-                                            value={form.confirmPassword}
-                                            name="confirmPassword"
-                                            placeholder="Confirme sua senha*"
-                                            onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
-                                            required
-                                        />
-                                        <button type="button" className="absolute right-2 mt-2 text-gray-400"
-                                            onClick={() => setConfirmShowPassword(prev => !prev)}
-                                        >
-                                            {confirmShowPassword ? (
-                                                <VisibilityIcon fontSize="small" />
-                                            ) : (
-                                                <VisibilityOffIcon fontSize="small" />
-                                            )}
-                                        </button>
-                                    </div>
-                                
+                                <div>
+                                    <Label className="py-1" htmlFor="phone">Telefone</Label>
+                                    <Input
+                                        type="tel"
+                                        maxLength={15}
+                                        value={form.phone}
+                                        onChange={handleChange}
+                                        name="phone"
+                                        placeholder="Informe seu telefone*"
+                                    />
+                                </div>
 
+                                <div className="relative">
+                                    <Label className="py-1" htmlFor="password">Senha</Label>
+                                    <Input
+                                        type={showPassword ? "text" : "password"}
+                                        value={form.password}
+                                        name="password"
+                                        placeholder="Crie sua senha*"
+                                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                                        required
+                                    />
+                                    <button type="button" className=" absolute right-2 mt-2 text-gray-400 "
+                                        onClick={() => setShowPassword(prev => !prev)}
+                                    >
+                                        {showPassword ? (
+                                            <VisibilityIcon fontSize="small" />
+                                        ) : (
+                                            <VisibilityOffIcon fontSize="small" />
+                                        )}
+                                    </button>
+                                </div>
+
+                                <div className="relative">
+                                    <Label className="py-1" htmlFor="confirmPassword">Confirmar senha</Label>
+                                    <Input
+                                        type={confirmShowPassword ? "text" : "password"}
+                                        value={form.confirmPassword}
+                                        name="confirmPassword"
+                                        placeholder="Confirme sua senha*"
+                                        onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+                                        required
+                                    />
+                                    <button type="button" className="absolute right-2 mt-2 text-gray-400"
+                                        onClick={() => setConfirmShowPassword(prev => !prev)}
+                                    >
+                                        {confirmShowPassword ? (
+                                            <VisibilityIcon fontSize="small" />
+                                        ) : (
+                                            <VisibilityOffIcon fontSize="small" />
+                                        )}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <Button type="submit" className="w-full mt-2"> Enviar Cadastro</Button>
                     </form>
-
                     <Link className="text-blue-300 justify-center flex mt-2" to='/login'>Voltar</Link>
                 </CardContent>
             </Card>
