@@ -2,6 +2,7 @@ import { AvatarMenu } from "@/@/components/layout/AvatarDropdown";
 import AppSidebar from "@/@/components/layout/Sidebar";
 import WhatsappAction from "@/@/components/layout/WhatsappAction";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/@/components/ui/sidebar";
+import { ListVagas } from "@/@/components/Vagas/ListVagas";
 
 export default function HomePage() {
     return (
@@ -16,7 +17,7 @@ export default function HomePage() {
                         
                     </div> 
 
-                    <div className="flex justi items-center gap-4">
+                    <div className="flex items-center gap-4">
                         <WhatsappAction />
                         <AvatarMenu />
                     </div>
@@ -25,6 +26,8 @@ export default function HomePage() {
 
                 <main className="p-6">
                     <h1>Pagina principal</h1>
+                    <ListVagas/>
+                    
                 </main>
             </SidebarInset>
         </SidebarProvider>
