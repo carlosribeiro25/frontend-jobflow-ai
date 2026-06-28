@@ -21,6 +21,14 @@ export function useCreateConnection() {
     })
 }
 
+export function useDeleteConnection() {
+    const qc = useQueryClient()
+    return useMutation({
+        mutationFn: (id: number) => whatsappApi.deleteConection(id),
+        onSuccess: () => qc.invalidateQueries({ queryKey: whatsappKeys.connections }),
+    })
+}
+
 export function useStartConnection() {
     return useMutation({
         mutationFn: (id: number) => whatsappApi.startConnection(id),
