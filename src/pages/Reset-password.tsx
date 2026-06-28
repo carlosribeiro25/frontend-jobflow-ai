@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { isAxiosError } from "axios"
 import { useResetPaasword } from "@/modules/auth/hooks/useResetPassword"
@@ -10,33 +10,68 @@ import {
 } from "@/@/components/ui/card"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useToast } from "@/modules/auth/hooks/useToast"
+import { ToastContainer } from "@/@/components/ui/toast-container"
 
 export function ResetPassword() {
     const [searchParams] = useSearchParams()
     const token = searchParams.get('token') ?? ''
+    const hasToken = Boolean(token)
     const [showPassword, setShowPassword] = useState(false)
     const [confirmShowPassword, setConfirmShowPassword] = useState(false)
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [localError, setLocalError] = useState<string | null>(null)
     const { mutate, isPending, isSuccess, isError, error } = useResetPaasword()
+    const { toasts, addToast, removeToast } = useToast()
+    const invalidTokenToastShown = useRef(false)
+
+    useEffect(() => {
+        if (!hasToken && !invalidTokenToastShown.current) {
+            addToast({
+                type: 'warning',
+                message: 'Token inválido ou expirado',
+                duration: 4000
+            })
+            invalidTokenToastShown.current = true
+        }
+    }, [hasToken, addToast])
 
     function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault()
 
         setLocalError(null)
 
-        if (!token) {
-            setLocalError('Token inválido ou ausente.')
-            return
+        if (!hasToken) {
+            addToast({
+                type: 'error',
+                message: 'Token inválido ou expirado',
+                duration: 4000
+            })
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            addToast({
+                type: "error",
+                message: "As senhas nao coincidem",
+                duration: 3000
+            })
+            return;
         }
 
         if (newPassword.length < 6) {
-            setLocalError('A senha de ter no minimo 6 caracteres')
+            addToast({
+                type: "warning",
+                message: "A senha deve ter no minimo 6 caracteres",
+                duration: 3000
+            })
+            
             return
         }
 
         mutate({ token, newPassword })
+
     }
 
     const serverError = isError
@@ -48,9 +83,21 @@ export function ResetPassword() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-50">
+            <ToastContainer toasts={toasts} removeToast={removeToast} />
 
             {isSuccess ? (
-                <p>Senha redefinida com sucesso.</p>
+                <div>
+                    <Card>
+                        <CardContent>
+                            <div>
+                                <p>Senha redefinida com sucesso 🎉🎉.</p>
+                                <Link className="text-blue-600" to='/login'>Faça login na sua conta</Link>
+                            </div>
+
+                        </CardContent>
+                    </Card>
+                </div>
+
             ) : (
                 <Card className="box-content w-90 m-auto">
                     <CardHeader>
@@ -110,14 +157,12 @@ export function ResetPassword() {
                                 disabled={isPending}> {isPending ? 'Salvando...' : 'Redefinir senha'}</button>
 
                             <div className="text-blue-400 text-center mt-2">
-                                
+
                                 <Link className="" to='/login'>Voltar para login</Link>
                             </div>
                         </form>
-
                     </CardContent>
                 </Card>
-
             )}
         </div>
     )
