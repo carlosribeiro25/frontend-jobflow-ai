@@ -68,7 +68,7 @@ export function RegisterUser() {
             setForm({ name: '', email: '', password: '', phone: '', confirmPassword: '' })
             addToast({
                 type: 'success',
-                message: data.message || 'Cadastro realizado com sucesso 🎉',
+                message: data.message || 'Cadastro realizado com sucesso 🎉🎉',
                 duration: 3000
             })
         },
