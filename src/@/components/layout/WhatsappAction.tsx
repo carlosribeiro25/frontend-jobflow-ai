@@ -63,15 +63,13 @@ export default function WhatsappAction() {
                     >
                         <WhatsAppIcon />
                     </Button>
-
-                        
+            
                     </Link>
                 </TooltipTrigger>
                 <TooltipContent>
                     <p className="font-semibold">Conectar Whatsapp</p>
                 </TooltipContent>
             </Tooltip>
-
         </TooltipProvider>
     )
 }
