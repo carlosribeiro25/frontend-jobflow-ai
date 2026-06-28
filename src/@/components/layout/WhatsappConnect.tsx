@@ -17,16 +17,13 @@ const statusConfig: Record<string,
 
 import { useWhatsappEvents } from "@/modules/auth/hooks/useWhatsappEvents";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Card, CardAction, CardContent } from "../ui/card";
+import { Card, CardAction, CardContent, CardHeader } from "../ui/card";
 import Chip, { type ChipProps } from "@mui/material/Chip";
 import { TrashIcon } from "lucide-react";
 
 export function WhatsappConnect() {
     const [activeConnectId, setActiveConnectId] = useState<number | null>(null)
     const [selectedGroupIds, setSelectedGroupIds] = useState<number[]>([])
-
     const { data: connections } = useConnections()
     const createConnection = useCreateConnection()
     const startConnection = useStartConnection()
@@ -35,10 +32,8 @@ export function WhatsappConnect() {
     const { status, qr } = useWhatsappEvents(activeConnectId)
     const isReady = status === 'ready'
     const statusView = status ? statusConfig[status] : undefined;
-
     const { data: groups, isError: groupsError, refetch: refetchGroups } = useGroups(activeConnectId ?? 0, isReady && !!activeConnectId)
     const selectGroups = useSelectGroups(activeConnectId ?? 0)
-
 
     async function handleDelete(id: number) {
         try {
@@ -69,15 +64,9 @@ export function WhatsappConnect() {
                 <Button onClick={handleConnect} disabled={createConnection.isPending}>
                     Conetar com o Whatsapp
                 </Button>
-
-
             </div>
 
             <div className="w-md p-10 space-y-3 grid lg:grid-cols-2 lg:w-4xl  m-auto gap-4">
-
-
-
-
 
                 {connections?.map((conn) => (
                     <Card key={conn.id}>
@@ -86,9 +75,9 @@ export function WhatsappConnect() {
                             <div>
                                 <CardAction>
                                     <Button type="button"
-                                     variant="destructive"
-                                     onClick={() => handleDelete(conn.id)}
-                                     disabled={deleteConnection.isPending}>
+                                        variant="destructive"
+                                        onClick={() => handleDelete(conn.id)}
+                                        disabled={deleteConnection.isPending}>
                                         <TrashIcon />
                                     </Button>
                                 </CardAction>
@@ -145,19 +134,23 @@ export function WhatsappConnect() {
                 )}
 
                 {isReady && groups && (
-                    <div>
-                        <h3>Selecione Grupos/canais</h3>
-                        {groups.map(group => (
-                            <Label key={group.id}>
-                                <Input type="checkbox"
-                                    checked={selectedGroupIds.includes(group.id)}
-                                    onChange={() => toggleGroup(group.id)} />
-                                {group.name}
-                            </Label>
-                        ))}
+                    <Card className="">
+                        <CardHeader>
+                            <h3 className="font-semibold">Selecione Grupos/canais</h3>
+                        </CardHeader>
 
-                        <Button onClick={() => selectGroups.mutate(selectedGroupIds)}>Salvar seleção</Button>
-                    </div>
+                        <CardContent className="w-full flex flex-col">
+                            {groups.map(group => (
+                                <div className="py-2 w-full flex gap-1 space-y-1  items-center " key={group.id}>
+                                    <input type="checkbox"
+                                        checked={selectedGroupIds.includes(group.id)}
+                                        onChange={() => toggleGroup(group.id)} />
+                                    <span>{group.name}</span>
+                                </div>
+                            ))}
+                        <Button type="submit" onClick={() => selectGroups.mutate(selectedGroupIds)}>Salvar seleção</Button>
+                        </CardContent>
+                    </Card>
                 )}
             </div>
         </>
