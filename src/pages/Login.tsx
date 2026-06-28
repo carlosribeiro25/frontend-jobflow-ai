@@ -1,8 +1,8 @@
-import { api } from "@/services/api";
 import { useAuth } from "@/modules/auth/context/auth-context";
+import { login as loginRequest } from "@/modules/auth/services/login";
 import { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Cookies from 'js-cookie'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -13,8 +13,8 @@ import { Button } from "@/@/components/ui/button";
 import { Label } from "@/@/components/ui/label";
 
 interface LoginResponse {
-    token: string;
-    refreshToken?: string;
+    token?: string;
+    accessToken?: string;
     user: {
         email: string;
         name: string;
@@ -25,11 +25,14 @@ interface LoginResponse {
 
 interface ApiErrorResponse {
     message?: string;
+    error?: string;
 }
 
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const isSubmittingRef = useRef(false)
     const navigate = useNavigate()
     const { login } = useAuth()
     const [showPassword, setShowPassword] = useState(false)
@@ -37,23 +40,35 @@ export default function Login() {
 
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
+        if (isSubmittingRef.current) {
+            return
+        }
+
+        isSubmittingRef.current = true
+        setIsSubmitting(true)
 
         try {
-            const { data } = await api.post<LoginResponse>('/login', {
-                email, password
-            })
+            const data = await loginRequest(email, password) as LoginResponse
 
-            login(data.token, {
+            const accessToken = data.accessToken ?? data.token
+
+            if (!accessToken) {
+                addToast({
+                    message: 'Resposta de autenticacao invalida. Tente novamente.',
+                    type: 'error',
+                    duration: 4000
+                })
+                return
+            }
+
+            login(accessToken, {
                 name: data.user.name,
                 picture: data.user.picture,
                 email: data.user.email,
                 phone: data.user.phone
             })
 
-            Cookies.set('token', data.token)
-            if (data.refreshToken) {
-                Cookies.set('refreshToken', data.refreshToken)
-            }
+            Cookies.set('token', accessToken)
 
             navigate('/')
 
@@ -62,8 +77,25 @@ export default function Login() {
                 ? error
                 : new AxiosError<ApiErrorResponse>('Erro inesperado no login')
 
-            console.error("Erro:", apiError.response?.data || apiError.message)
-            if (apiError.response?.status === 400) {
+            if (apiError.code === 'ECONNABORTED' || !apiError.response) {
+                console.warn("Falha de conexao no login:", apiError.message)
+            } else {
+                console.error("Erro:", apiError.response?.data || apiError.message)
+            }
+
+            if (apiError.code === 'ECONNABORTED') {
+                addToast({
+                    message: 'O servidor demorou para responder ao login. Verifique se a API esta online e tente novamente.',
+                    type: 'warning',
+                    duration: 5000
+                })
+            } else if (!apiError.response) {
+                addToast({
+                    message: 'Nao foi possivel conectar ao servidor de login. Verifique a API e sua rede.',
+                    type: 'warning',
+                    duration: 5000
+                })
+            } else if (apiError.response?.status === 400) {
                 addToast({
                     message: apiError.response?.data?.message || 'Credenciais invalidas, verifique se o email ou senha estão corretos',
                     type: 'error',
@@ -77,6 +109,9 @@ export default function Login() {
                 })
             }
 
+        } finally {
+            isSubmittingRef.current = false
+            setIsSubmitting(false)
         }
 
     }
@@ -109,6 +144,7 @@ export default function Login() {
                                 value={email}
                                 placeholder="Digite seu email*"
                                 required
+                                disabled={isSubmitting}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
@@ -126,9 +162,11 @@ export default function Login() {
                                 value={password}
                                 placeholder="Digite sua senha*"
                                 required
+                                disabled={isSubmitting}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <button type="button" className=" absolute right-2 mt-10 text-gray-400 "
+                                disabled={isSubmitting}
                                 onClick={() => setShowPassword(prev => !prev)}
                             >
                                 {showPassword ? (
@@ -140,7 +178,9 @@ export default function Login() {
                         </div>
 
                         <div className="justify-center justify-items-center">
-                            <Button className="font-semibold w-full mt-3  px-2 py-2" type="submit">Conecte-se</Button>
+                            <Button className="font-semibold w-full mt-3  px-2 py-2" type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? 'Conectando...' : 'Conecte-se'}
+                            </Button>
                         </div>
 
                     </form>
