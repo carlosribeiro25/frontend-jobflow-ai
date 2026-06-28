@@ -3,7 +3,8 @@ import Cookies from 'js-cookie';
 
 export const api = axios.create({
     baseURL: import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_URL,
-    withCredentials: true
+    withCredentials: true,
+    timeout: 15000,
 })
 
 api.interceptors.request.use(
@@ -15,20 +16,21 @@ api.interceptors.request.use(
         }
 
         return config
-    },
-    (error) => {
-        return Promise.reject(error)
-    }
-)
+    })
+    
 
 api.interceptors.response.use(
-    response => response,
-    async error => {
+    (response) => response,
+    async (error) => {
         const originalRequest = error.config;
+        const requestUrl = originalRequest?.url as string | undefined;
 
-        if(originalRequest.url === '/refresh') {
+        if (requestUrl === '/login') {
+            return Promise.reject(error)
+        }
+
+        if(requestUrl === '/refresh') {
             Cookies.remove('token');
-            Cookies.remove('refreshToken');
             window.location.href = '/login';
             return Promise.reject(error)
         }
@@ -37,19 +39,23 @@ api.interceptors.response.use(
             originalRequest._retry = true
 
           try {
-            const refreshToken = Cookies.get('refreshToken');
-            const response = await api.post('/refresh', { token: refreshToken});
-            const newAccessToken = response.data.accessToken;
+            const response = await api.post('/refresh');
+            const newAccessToken = response.data?.accessToken ?? response.data?.token;
+
+            if (!newAccessToken) {
+                Cookies.remove('token');
+                window.location.href = '/login';
+                return Promise.reject(error)
+            }
 
             Cookies.set('token', newAccessToken);
-            api.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+            api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
             return api(originalRequest)
             
           } catch (refreshError) {
             Cookies.remove('token');
-            Cookies.remove('refreshToken')
             window.location.href = '/login';
             return Promise.reject(refreshError)
           }  
