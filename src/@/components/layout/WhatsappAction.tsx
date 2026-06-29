@@ -18,11 +18,11 @@ export default function WhatsappAction() {
   if (isMobile) {
     return (
       <Sheet>
-        <SheetTrigger asChild>
+        <SheetTrigger asChild >
           <Button
             className={buttonVariants({
               size: 'icon',
-              className: 'bg-green-400 hover:bg-green-400 w-2 h-5 cursor-pointer : ',
+              className: 'bg-green-400 hover:bg-green-400 w-8 h-5 cursor-pointer',
             })}
           >
             <WhatsAppIcon />
@@ -63,7 +63,7 @@ export default function WhatsappAction() {
             <Button
               className={buttonVariants({
                 size: 'icon',
-                className: 'bg-green-400 hover:bg-green-400 w-3 h-5 cursor-pointer : ',
+                className: 'bg-green-400 hover:bg-green-400 w-3 h-5 cursor-pointer ',
               })}
             >
               <WhatsAppIcon />

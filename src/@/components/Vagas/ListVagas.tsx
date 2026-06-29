@@ -62,7 +62,7 @@ export function ListVagas() {
     <div className="space-y-4 grid lg:grid-cols-3 md:grid-cols-2 w-full justify-center gap-2  lg:p-2 ">
       {data?.vagas.map((vaga) => (
         <Card key={vaga.id}>
-          <CardContent className="space-y-2 p-4">
+          <CardContent className="space-y-2 ">
             <h1 className="text-emerald-300">{vaga.title}</h1>
             <p>{vaga.description}</p>
             <p>Vaga do tipo {vaga.tipo_vaga}</p>

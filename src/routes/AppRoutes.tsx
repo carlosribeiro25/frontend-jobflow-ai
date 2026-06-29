@@ -10,6 +10,7 @@ import { WhatsappConnect } from '@/@/components/layout/WhatsappConnect'
 import SettingsApp from '@/pages/settings/Settings'
 import { ListVagas } from '@/@/components/Vagas/ListVagas'
 import AppLayout from '@/@/components/layout/Layout'
+import Filters from '@/pages/filters/Filters'
 
 export default function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ export default function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/vagas" element={<ListVagas />} />
+          <Route path="/filtros" element={<Filters />} />
           <Route path="/settings" element={<SettingsApp />} />
           <Route path="/conectWhatsapp" element={<WhatsappConnect />} />
         </Route>

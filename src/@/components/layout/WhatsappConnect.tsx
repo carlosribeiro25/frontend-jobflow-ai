@@ -68,13 +68,13 @@ export function WhatsappConnect() {
 
   return (
     <>
-      <div className="m-auto flex ml-10 mt-4 items-center justify-center ">
+      <div className="m-auto mb-3 flex  items-center justify-center ">
         <Button onClick={handleConnect} disabled={createConnection.isPending}>
           Conetar com o Whatsapp
         </Button>
       </div>
 
-      <div className="w-md p-10 space-y-3 grid lg:grid-cols-2 lg:w-4xl  m-auto gap-4">
+      <div className="space-y-3 grid md:grid-cols-2 lg:grid-cols-2 lg:w-4xl  m-auto gap-4">
         {connections?.map((conn) => (
           <Card key={conn.id}>
             <CardContent className="space-y-4 p-5">
