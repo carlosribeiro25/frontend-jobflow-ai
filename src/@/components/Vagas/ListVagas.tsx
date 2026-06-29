@@ -4,7 +4,7 @@ import { Card, CardContent } from "../ui/card"
 import PaginationVagas from "../layout/Pagination";
 import { useState } from "react";
 
-const LIMIT = 10;
+const LIMIT = 12;
 
 interface Vaga {
     id: number;
@@ -59,7 +59,7 @@ export function ListVagas() {
     const hasMore = page < totalPages;
 
     return (
-        <div className="space-y-4 grid lg:grid-cols-2 gap-2 lg:p-2 ">
+        <div className="space-y-4 grid lg:grid-cols-3 md:grid-cols-2 w-full justify-center gap-2  lg:p-2 ">
             {data?.vagas.map((vaga) => (
                 <Card key={vaga.id}>
                     <CardContent className="space-y-2 p-4" >
@@ -84,11 +84,10 @@ export function ListVagas() {
                                 month: 'long',
                                 year: 'numeric'
                             })}</p>
-
                     </CardContent>
                 </Card>
-            ))}
-            <div>
+            ))} 
+            <div className="lg:col-span-3  md:col-span-2 w-full flex justify-center">
                 <PaginationVagas
                     page={page}
                     hasMore={hasMore}
