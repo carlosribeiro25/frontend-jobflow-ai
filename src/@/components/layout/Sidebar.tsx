@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import {
   Sidebar,
   SidebarContent,
@@ -8,40 +9,30 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
 } from '@/@/components/ui/sidebar'
-import HomeFilledIcon from '@mui/icons-material/HomeFilled'
+import { sidebarItens } from '../config/sidebar-itens'
 
 export default function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarSeparator />
-
-            <SidebarMenuButton>
-              <HomeFilledIcon />
-              Dashboard
-            </SidebarMenuButton>
-
-            <SidebarSeparator />
-
-            <SidebarMenuButton>
-              <HomeFilledIcon />
-              Dashboard
-            </SidebarMenuButton>
-            <SidebarMenuButton>
-              <HomeFilledIcon />
-              Dashboard
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+      <SidebarHeader></SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupLabel></SidebarGroupLabel>
+          <SidebarSeparator />
+          <SidebarMenu>
+            {sidebarItens.map((item) => (
+              <NavLink to={item.path}>
+                {({ isActive }) => (
+                  <SidebarMenuButton isActive={isActive}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                )}
+              </NavLink>
+            ))}
+          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter></SidebarFooter>
