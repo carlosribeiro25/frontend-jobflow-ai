@@ -1,6 +1,5 @@
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import { Button } from '../ui/button';
 
 interface PaginationProps {
     page: number;
@@ -12,26 +11,24 @@ interface PaginationProps {
 
 export default function PaginationVagas({ page, hasMore, onPageChange, isloading, totalPages }: PaginationProps) {
     return (
-        <div className='flex justify-center md:justify-center lg:justify-center bg-amber-400 m-auto items-center '>
-            <div>
-                <Button variant='ghost'
-                
+        <div className='w-full flex justify-center rounded items-center lg:col-span-2 gap-2'>
+            <div >
+                <button 
                  onClick={() => onPageChange(page - 1)}
                     disabled={page <= 1 || isloading}>
                     <ArrowCircleLeftIcon />
-                </Button>
+                </button>
             </div>
 
             <span>Paginas {page} de {totalPages ?? '?'}</span>
 
             <div>
-                <Button variant='ghost'
+                <button 
                  onClick={() => onPageChange(page + 1)}
                     disabled={!hasMore || isloading}>
                     <ArrowCircleRightIcon/>
-                </Button>
+                </button>
             </div>
         </div>
-
     )
 }
