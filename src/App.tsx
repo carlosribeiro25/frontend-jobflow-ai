@@ -1,4 +1,4 @@
-import AuthProvider from './pages/AuthLogin'
+import AuthProvider from './pages/auth/AuthLogin'
 import AppRoutes from './routes/AppRoutes'
 
 export default function App() {
