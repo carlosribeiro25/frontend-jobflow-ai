@@ -1,47 +1,50 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from 'react'
 
-export type ToastType = "success" | "error" | "warning" | "info";
+export type ToastType = 'success' | 'error' | 'warning' | 'info'
 
 export interface Toast {
-	id: number;
-	message: string;
-	type: ToastType;
+  id: number
+  message: string
+  type: ToastType
 }
 
 export interface AddToastParams {
-	message: string;
-	type?: ToastType;
-	duration?: number;
+  message: string
+  type?: ToastType
+  duration?: number
 }
 
 export function useToast() {
-	const [toasts, setToasts] = useState<Toast[]>([]);
-	const timeoutIdsRef = useRef<number[]>([]);
+  const [toasts, setToasts] = useState<Toast[]>([])
+  const timeoutIdsRef = useRef<number[]>([])
 
-	const removeToast = useCallback((id: number) => {
-		setToasts((prev) => prev.filter((toast) => toast.id !== id));
-	}, []);
+  const removeToast = useCallback((id: number) => {
+    setToasts((prev) => prev.filter((toast) => toast.id !== id))
+  }, [])
 
-	const addToast = useCallback(({ message, type = "info", duration = 3000 }: AddToastParams) => {
-		const id = Date.now() + Math.floor(Math.random() * 1000);
+  const addToast = useCallback(
+    ({ message, type = 'info', duration = 3000 }: AddToastParams) => {
+      const id = Date.now() + Math.floor(Math.random() * 1000)
 
-		setToasts((prev) => [...prev, { id, message, type }]);
+      setToasts((prev) => [...prev, { id, message, type }])
 
-		const timeoutId = window.setTimeout(() => {
-			removeToast(id);
-		}, duration);
+      const timeoutId = window.setTimeout(() => {
+        removeToast(id)
+      }, duration)
 
-		timeoutIdsRef.current.push(timeoutId);
-	}, [removeToast]);
+      timeoutIdsRef.current.push(timeoutId)
+    },
+    [removeToast]
+  )
 
-	useEffect(() => {
-		return () => {
-			timeoutIdsRef.current.forEach((timeoutId) => {
-				window.clearTimeout(timeoutId);
-			});
-			timeoutIdsRef.current = [];
-		};
-	}, []);
+  useEffect(() => {
+    return () => {
+      timeoutIdsRef.current.forEach((timeoutId) => {
+        window.clearTimeout(timeoutId)
+      })
+      timeoutIdsRef.current = []
+    }
+  }, [])
 
-	return { toasts, addToast, removeToast };
+  return { toasts, addToast, removeToast }
 }

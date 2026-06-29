@@ -1,7 +1,7 @@
-import { api } from "./api";
+import { api } from './api'
 
 export interface ForgotPasswordPayload {
-    email: string
+  email: string
 }
 
 export interface ResetPasswordPayload {
@@ -10,21 +10,15 @@ export interface ResetPasswordPayload {
 }
 
 export interface MessageResponse {
-    message: string
+  message: string
 }
 
-export async function forgotPassword(
-    payload: ForgotPasswordPayload,
- ): Promise<MessageResponse>{
-    const { data } = await api.post<MessageResponse>('/forgot-password', payload)
-    return data
+export async function forgotPassword(payload: ForgotPasswordPayload): Promise<MessageResponse> {
+  const { data } = await api.post<MessageResponse>('/forgot-password', payload)
+  return data
 }
 
-export async function resetPassword(
-    payload: ResetPasswordPayload,
-): Promise<MessageResponse> {
-    const { data } = await api.post<MessageResponse>('/reset-password', payload )
-    return data
+export async function resetPassword(payload: ResetPasswordPayload): Promise<MessageResponse> {
+  const { data } = await api.post<MessageResponse>('/reset-password', payload)
+  return data
 }
-
-

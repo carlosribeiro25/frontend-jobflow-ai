@@ -1,5 +1,5 @@
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert'
+import Stack from '@mui/material/Stack'
 
 export default function BasicAlerts() {
   return (
@@ -9,5 +9,5 @@ export default function BasicAlerts() {
       <Alert severity="warning">This is a warning Alert.</Alert>
       <Alert severity="error">This is an error Alert.</Alert>
     </Stack>
-  );
+  )
 }
