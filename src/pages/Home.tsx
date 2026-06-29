@@ -8,14 +8,12 @@ export default function HomePage() {
     return (
         <SidebarProvider>
             <AppSidebar />
-
             <SidebarInset>
-                
                 <header className="flex  justify-between h-16 items-center border-b px-4">
-                     <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2">
                         <SidebarTrigger />
-                        
-                    </div> 
+
+                    </div>
 
                     <div className="flex items-center gap-4">
                         <WhatsappAction />
@@ -26,8 +24,7 @@ export default function HomePage() {
 
                 <main className="p-6">
                     <h1>Pagina principal</h1>
-                    <ListVagas/>
-                    
+                    <ListVagas />
                 </main>
             </SidebarInset>
         </SidebarProvider>
