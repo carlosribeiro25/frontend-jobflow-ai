@@ -1,6 +1,7 @@
 import HomeFilledIcon from '@mui/icons-material/HomeFilled'
 import EngineeringIcon from '@mui/icons-material/Engineering'
 import SettingsIcon from '@mui/icons-material/Settings'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 
 export const sidebarItens = [
   {
@@ -17,5 +18,10 @@ export const sidebarItens = [
     title: 'Configurações',
     path: '/settings',
     icon: SettingsIcon,
+  },
+  {
+    title: 'Conectar com o Whatsapp',
+    path: '/conectWhatsapp',
+    icon: WhatsAppIcon,
   },
 ]
