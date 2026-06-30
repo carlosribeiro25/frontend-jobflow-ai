@@ -18,6 +18,7 @@ import {
 } from '@/@/components/ui/card'
 import { Button } from '@/@/components/ui/button'
 import { Label } from '@/@/components/ui/label'
+import { Input } from '@/@/components/ui/input'
 
 interface LoginResponse {
   token?: string
@@ -128,7 +129,7 @@ export default function Login() {
   return (
     <div className="md:w-sm overflow-hidden p-10 md:p-12 lg:w-md justify-center m-auto  items-center">
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-      <Card>
+      <Card >
         <h1 className="mt-1 font-bold text-lg justify-center sm:text-2xl flex justify-items-center text-fuchsia-700 py-2">
           {' '}
           Jobflow AI
@@ -138,20 +139,20 @@ export default function Login() {
 
           <CardDescription>Insira seu e-mail e senha para acessar sua conta.</CardDescription>
           <CardAction>
-            <Link className="text-blue-700 " to="/CadastroUsuario">
+            <Link className="text-blue-400 " to="/CadastroUsuario">
               Cadastre-se
             </Link>
           </CardAction>
         </CardHeader>
-        <CardContent>
-          <form className="px-1" onSubmit={handleSubmit}>
+        <CardContent >
+          <form className="px-1 pb-3 " onSubmit={handleSubmit}>
             <div className="flex flex-col">
-              <Label className="py-1" htmlFor="email">
+              <Label className="py-1 pb-2" htmlFor="email">
                 Email{' '}
               </Label>
 
-              <input
-                className="px-2 py-2 outline-none bg-gray-200 rounded"
+              <Input
+                className="px-2 py-4 lg:py-4.5 outline-none "
                 type="email"
                 name="email"
                 id="email"
@@ -168,12 +169,12 @@ export default function Login() {
                 <Label className="py-2" htmlFor="password">
                   Senha
                 </Label>
-                <Link className="mt-2 text-blue-500" to="/esquecer-senha">
+                <Link className="mt-2 text-blue-400" to="/esquecer-senha">
                   Esqueceu a senha?
                 </Link>
               </div>
-              <input
-                className="px-2 py-2 outline-none bg-gray-200 rounded"
+              <Input
+                className="px-2 py-4 lg:py-4.5 outline-none  "
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 id="password"
@@ -185,7 +186,7 @@ export default function Login() {
               />
               <button
                 type="button"
-                className=" absolute right-2 mt-10 text-gray-400 "
+                className=" absolute right-2 mt-9 lg:mt-10 text-gray-400 "
                 disabled={isSubmitting}
                 onClick={() => setShowPassword((prev) => !prev)}
               >
@@ -199,7 +200,7 @@ export default function Login() {
 
             <div className="justify-center justify-items-center">
               <Button
-                className="font-semibold w-full mt-3  px-2 py-2"
+                className="font-semibold w-full mt-3  px-2 py-4 lg:py-5 cursor-pointer"
                 type="submit"
                 disabled={isSubmitting}
               >
