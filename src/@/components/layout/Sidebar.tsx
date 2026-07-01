@@ -24,7 +24,7 @@ export default function AppSidebar() {
           <SidebarMenu className="gap-2">
             <SidebarSeparator />
             {sidebarItens.map((item) => (
-              <NavLink to={item.path}>
+              <NavLink key={item.path} to={item.path}>
                 {({ isActive }) => (
                   <SidebarMenuButton isActive={isActive}>
                     <item.icon />

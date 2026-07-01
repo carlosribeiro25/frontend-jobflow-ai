@@ -18,7 +18,7 @@ export default function WhatsappAction() {
   if (isMobile) {
     return (
       <Sheet>
-        <SheetTrigger asChild >
+        <SheetTrigger asChild>
           <Button
             className={buttonVariants({
               size: 'icon',

@@ -3,7 +3,13 @@ import { SidebarTrigger } from '../ui/sidebar'
 import { SearchVagas } from '../Vagas/SearchVagas'
 import { AvatarMenu } from './AvatarDropdown'
 
-export function AppHeader() {
+type AppHeaderProps = {
+  search: string
+  onSearchChange: (value: string) => void
+  onSearch: () => void
+}
+
+export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) {
   return (
     <div>
       <header className="flex w-full justify-between h-16 items-center border-b px-4">
@@ -13,11 +19,9 @@ export function AppHeader() {
         </div>
 
         <div className="flex justify-between  items-center gap-4">
-            <SearchVagas/>
+          <SearchVagas value={search} onChange={onSearchChange} onSearch={onSearch} />
           <ModeToggle />
-          <div className="hidden md:block">
-            
-          </div>
+          <div className="hidden md:block"></div>
           <AvatarMenu />
         </div>
       </header>
