@@ -127,9 +127,9 @@ export default function Login() {
     }
   }
   return (
-    <div className="md:w-sm overflow-hidden p-10 md:p-12 lg:w-md justify-center m-auto  items-center">
+    <div className="w-full overflow-hidden p-10 md:p-12 lg:w-md justify-center m-auto  items-center">
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-      <Card >
+      <Card>
         <h1 className="mt-1 font-bold text-lg justify-center sm:text-2xl flex justify-items-center text-fuchsia-700 py-2">
           {' '}
           Jobflow AI
@@ -144,7 +144,7 @@ export default function Login() {
             </Link>
           </CardAction>
         </CardHeader>
-        <CardContent >
+        <CardContent>
           <form className="px-1 pb-3 " onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <Label className="py-1 pb-2" htmlFor="email">
