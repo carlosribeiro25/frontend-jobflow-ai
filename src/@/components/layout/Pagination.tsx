@@ -17,7 +17,7 @@ export default function PaginationVagas({
   totalPages,
 }: PaginationProps) {
   return (
-    <div className="w-full flex justify-center rounded items-center lg:col-span-2 gap-2">
+    <div className="w-full mt-2 flex justify-center rounded items-center lg:col-span-2 gap-2">
       <div>
         <button onClick={() => onPageChange(page - 1)} disabled={page <= 1 || isloading}>
           <ArrowCircleLeftIcon />
