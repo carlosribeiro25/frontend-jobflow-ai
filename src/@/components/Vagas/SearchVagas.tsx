@@ -9,17 +9,17 @@ type SearchVagasProps = {
 
 export function SearchVagas({ value, onChange, onSearch }: SearchVagasProps) {
   return (
-    <div>
+    <div >
       <form
-        className="relative w-full max-w-102.5"
+        className="relative w-full"
         onSubmit={(e) => {
           e.preventDefault()
           onSearch()
         }}
       >
         <Input
-          className="pr-10"
-          type="search"
+          className="pr-10 "
+          type="text"
           placeholder="Buscar vagas"
           value={value}
           onChange={(e) => onChange(e.target.value)}
