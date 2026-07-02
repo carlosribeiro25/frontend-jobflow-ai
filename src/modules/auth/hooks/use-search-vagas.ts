@@ -5,7 +5,7 @@ export function useSearchVagas(q: string, page = 1, limit = 10) {
   return useQuery({
     queryKey: ['search-vagas', q, page, limit],
     queryFn: () => searchVagas({ q, page, limit }),
-    enabled: q.trim().length >= 1, 
-    placeholderData: keepPreviousData, 
+    enabled: q.trim().length >= 1,
+    placeholderData: keepPreviousData,
   })
 }

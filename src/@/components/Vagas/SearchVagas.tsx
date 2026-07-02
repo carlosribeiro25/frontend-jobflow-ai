@@ -9,7 +9,7 @@ type SearchVagasProps = {
 
 export function SearchVagas({ value, onChange, onSearch }: SearchVagasProps) {
   return (
-    <div >
+    <div>
       <form
         className="relative w-full"
         onSubmit={(e) => {

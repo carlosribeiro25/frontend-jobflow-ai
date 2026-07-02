@@ -1,10 +1,17 @@
 import { ModeToggle } from '../theme/mode-toggle'
 import { Button } from '../ui/button'
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '../ui/sheet'
 import { SidebarTrigger } from '../ui/sidebar'
 import { SearchVagas } from '../Vagas/SearchVagas'
 import { AvatarMenu } from './AvatarDropdown'
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 type AppHeaderProps = {
@@ -22,36 +29,32 @@ export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) 
           <h1 className="font-extrabold lg:text-2xl md:text-2xl text-fuchsia-700 ">Jobflow AI</h1>
         </div>
 
-        <div className='hidden md:block w-full md:w-70'>
+        <div className="hidden md:block w-full md:w-70">
           <SearchVagas value={search} onChange={onSearchChange} onSearch={onSearch} />
         </div>
 
         <div className="flex justify-between items-center gap-2">
-          <Sheet >
+          <Sheet>
             <SheetTrigger asChild>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='md:hidden '
-              >
+              <Button variant="ghost" size="icon" className="md:hidden ">
                 <SearchIcon />
               </Button>
             </SheetTrigger>
-            <SheetContent side='top' className='p-6 ' >
-                <VisuallyHidden>
-              <SheetHeader>
-                <SheetTitle>Buscar Vagas</SheetTitle>
+            <SheetContent side="top" className="p-6 ">
+              <VisuallyHidden>
+                <SheetHeader>
+                  <SheetTitle>Buscar Vagas</SheetTitle>
 
-                <SheetDescription>
-                  Digite o nome da vaga para realizar a pesquisa
-                </SheetDescription>
-              </SheetHeader>
-                </VisuallyHidden>
+                  <SheetDescription>
+                    Digite o nome da vaga para realizar a pesquisa
+                  </SheetDescription>
+                </SheetHeader>
+              </VisuallyHidden>
               <SearchVagas value={search} onChange={onSearchChange} onSearch={onSearch} />
             </SheetContent>
           </Sheet>
-          <div className='hidden lg:block'>
-          <ModeToggle  />
+          <div className="hidden lg:block">
+            <ModeToggle />
           </div>
           <AvatarMenu />
         </div>
