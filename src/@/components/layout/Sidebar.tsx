@@ -5,21 +5,27 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarSeparator,
-  SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
+  SidebarHeader,
 } from '@/@/components/ui/sidebar'
 import { sidebarItens } from '../config/sidebar-itens'
+import { useAuth } from '@/modules/auth/context/auth-context'
 
 export default function AppSidebar() {
+  const { user } = useAuth()
+  const userData = user?.userData
+
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader></SidebarHeader>
-
       <SidebarContent>
+        <SidebarHeader>
+          <div className="flex gap-2 items-center ml-2 tracking-widest">
+            <span className="font-semibold text-base text-fuchsia-700">Jobflow </span>
+            <p> de {userData?.name} </p>
+          </div>
+        </SidebarHeader>
         <SidebarGroup>
-          <SidebarGroupLabel></SidebarGroupLabel>
           <SidebarSeparator />
           <SidebarMenu className="gap-2">
             <SidebarSeparator />
