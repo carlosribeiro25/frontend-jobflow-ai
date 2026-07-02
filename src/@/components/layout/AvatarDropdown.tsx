@@ -1,3 +1,4 @@
+import { ModeToggle } from '../theme/mode-toggle'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import {
@@ -39,6 +40,12 @@ export function AvatarMenu() {
         <DropdownMenuGroup>
           <DropdownMenuItem>Perfil</DropdownMenuItem>
           <DropdownMenuItem>Configurações</DropdownMenuItem>
+          <div className='flex items-center ml-1.5 gap-2 lg:hidden '>
+          <span>Mudar tema </span>
+            <ModeToggle/>
+
+          </div>
+          
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={logout}>
