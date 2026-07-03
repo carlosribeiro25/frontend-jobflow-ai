@@ -3,6 +3,7 @@ export type Modality = 'Remote' | 'Hibrido' | 'Presencial' | 'Home Office'
 export interface Vaga {
   id: number
   title: string | null
+  message?: string | null
   tipo_vaga?: string | null
   description?: string | null
   category?: string | null

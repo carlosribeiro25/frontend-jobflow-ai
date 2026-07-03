@@ -1,39 +1,39 @@
 import { Card, CardContent } from '../ui/card'
 import type { Vaga } from '@/types/vaga'
 import { useNavigate } from 'react-router-dom'
-import PlaceIcon from '@mui/icons-material/Place';
-import StoreIcon from '@mui/icons-material/Store';
+import PlaceIcon from '@mui/icons-material/Place'
+import StoreIcon from '@mui/icons-material/Store'
 
 type CardVagsProps = {
   vaga: Vaga
 }
 
 export function CardVagas({ vaga }: CardVagsProps) {
-
   const navigate = useNavigate()
 
   return (
     <Card key={vaga.id}>
       <CardContent className="space-y-2 ">
-        <div className='flex justify-between mb-4'>
+        <div className="flex justify-between mb-4">
           <h1 className="text-emerald-300">{vaga.title}</h1>
-            <button
-              className='cursor-pointer text-blue-500'
-              onClick={() => navigate(`/vagas/${vaga.id}`)}>
-              Detalhes
-            </button >
+          <button
+            className="cursor-pointer text-blue-500"
+            onClick={() => navigate(`/vagas/${vaga.id}`)}
+          >
+            Detalhes
+          </button>
         </div>
 
         <p>{vaga.message}</p>
         <p>Vaga do tipo {vaga.tipo_vaga}</p>
         <p>Categoria {vaga.category}</p>
 
-        <div className='flex gap-2 items-center'>
+        <div className="flex gap-2 items-center">
           <p>Empresa: {vaga.company}</p>
           <StoreIcon />
         </div>
 
-        <div className='flex gap-2 items-center'>
+        <div className="flex gap-2 items-center">
           <p>{vaga.location}</p>
           <PlaceIcon />
         </div>
