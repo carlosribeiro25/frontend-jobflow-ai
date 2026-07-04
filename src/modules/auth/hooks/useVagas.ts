@@ -8,7 +8,7 @@ export function useVagas(page: number, search: string) {
 
   const query = useQuery({
     queryKey: searching ? ['vagas', 'search', search, page] : ['vagas', 'list', page],
-    queryFn: () => (searching ? searchVagas(search, page) : fetchVagas(page)),
+    queryFn: () => (searching ? searchVagas(search, page) : fetchVagas('', page)),
     refetchOnWindowFocus: false,
     placeholderData: (previous) => previous,
   })
