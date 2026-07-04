@@ -1,18 +1,25 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { SidebarProvider, SidebarInset } from '../ui/sidebar'
 import { AppHeader } from './Header'
 import AppSidebar from './Sidebar'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDebounce } from '@/modules/auth/hooks/use-debounce'
 import { useQueryClient } from '@tanstack/react-query'
 
 export default function AppLayout() {
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search, 400)
-  const queryClient = useQueryClient()
+   const queryClient = useQueryClient()
+  const location = useLocation()
+
+  useEffect(() => {
+    if(location.pathname !== '/') {
+      setSearch('')
+    }
+  },[location.pathname])
 
   const handleSearch = () => {
-    queryClient.invalidateQueries({ queryKey: ['vagas', 'search'] })
+     queryClient.invalidateQueries({ queryKey: ['vagas', 'search'] })
   }
 
   return (
