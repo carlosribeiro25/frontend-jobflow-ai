@@ -27,12 +27,17 @@ function notFound(error: unknown): boolean {
   return isAxiosError(error) && error.response?.status === 404
 }
 
-export async function fetchVagas(page: number): Promise<VagasResult> {
+export async function fetchVagas(q: string, page: number, limit = LIMIT): Promise<VagasResult> {
   try {
     const { data } = await api.get<VagasApiResponse>('/vagas', {
-      params: { page, limit: LIMIT },
+      params: {q, page, limit: LIMIT },
     })
-    return data
+    return {
+      vagas: data.vagas,
+      total: data.total,
+      hasMore: page * limit < data.total,
+      page
+    } 
   } catch (error) {
     if (notFound(error)) {
       return { vagas: [], total: 0, hasMore: false, page }
