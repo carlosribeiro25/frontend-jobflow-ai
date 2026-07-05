@@ -4,6 +4,7 @@ import { AppHeader } from './Header'
 import AppSidebar from './Sidebar'
 import { useState, useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { NavMobileFooter } from './NavFooter'
 
 export default function AppLayout() {
   const [inputValue, setInputValue] = useState('')
@@ -33,10 +34,14 @@ export default function AppLayout() {
 
       <SidebarInset>
         <AppHeader search={inputValue} onSearchChange={setInputValue} onSearch={handleSearch} />
-
+        
         <main className="flex-1 p-6">
           <Outlet context={{ search: submittedSearch }} />
+          
         </main>
+        <div className='md:hidden'>
+        <NavMobileFooter/>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )
