@@ -64,7 +64,7 @@ export function PageDetailVaga() {
         </div>
       )}
 
-      <div className="w-full gap-4  lg:p-2 ">
+      <div className="w-full md:w-md lg:w-md gap-4  lg:p-2 ">
         <Card>
           <CardContent>
             <h1 className="text-emerald-300">{vaga.title}</h1>
@@ -72,7 +72,7 @@ export function PageDetailVaga() {
             <p>Vaga do tipo {vaga.tipo_vaga}</p>
             <p>Categoria {vaga.category}</p>
             <p>Empresa: {vaga.company}</p>
-            <p className=" rounded p-2">Requisitos {vaga.requirements}</p>
+            <p>Requisitos {vaga.requirements}</p>
             <p>Salario {vaga.salary}</p>
             <p>Beneficios: {vaga.benefits}</p>
             <p> {vaga.contact}</p>

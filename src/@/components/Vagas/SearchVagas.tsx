@@ -7,14 +7,16 @@ import SearchIcon from '@mui/icons-material/Search'
 
 type SearchVagasProps = {
   value: string
+
   onChange: (value: string) => void
-  onSearch: () => void
+  onSearch: (value: string) => void
 }
 
 export function SearchVagas({ value, onChange, onSearch }: SearchVagasProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const containRef = useRef<HTMLDivElement | null>(null);
-  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(-1)
+  const containRef = useRef<HTMLDivElement | null>(null)
+  const navigate = useNavigate()
 
   const { data } = useQuery({
     queryKey: ['vagas', 'sugestions', value],
@@ -34,29 +36,61 @@ export function SearchVagas({ value, onChange, onSearch }: SearchVagasProps) {
 
   const sugestions = data?.vagas ?? []
 
+  function goToVaga(id: number) {
+    navigate(`/vagas/${id}`)
+    setIsOpen(false)
+    setActiveIndex(-1)
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!isOpen || sugestions.length === 0) return
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault() // evita mover o cursor do input
+      setActiveIndex((prev) => (prev + 1) % sugestions.length)
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActiveIndex((prev) => (prev - 1 + sugestions.length) % sugestions.length)
+    } else if (e.key === 'Enter') {
+      if (activeIndex >= 0) {
+        e.preventDefault() // impede o submit do form
+        goToVaga(sugestions[activeIndex].id)
+      }
+      // se activeIndex === -1, deixa o form submeter normalmente (onSearch)
+    } else if (e.key === 'Escape') {
+      setIsOpen(false)
+      setActiveIndex(-1)
+    }
+  }
+
   return (
     <div ref={containRef} className="relative w-full max-w-102.5">
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          onSearch()
+          onSearch(value.trim())
           setIsOpen(false)
         }}
       >
         <Input
           className="pr-10 "
-          type="text"
+          type="search"
           placeholder="Buscar vagas"
           value={value}
           onChange={(e) => {
             onChange(e.target.value)
+            setActiveIndex(-1)
             setIsOpen(true)
           }}
-          onFocus={() => setIsOpen(true)}
+          onFocus={() => {
+            setIsOpen(true)
+            setActiveIndex(-1)
+          }}
+          onKeyDown={handleKeyDown}
         />
 
         <button
-          className="absolute right-1 top-1 text-muted-foreground hover:text-foreground "
+          className="absolute  border-l-2  h-full right-2 p-1 text-muted-foreground hover:text-foreground "
           type="submit"
         >
           <SearchIcon fontSize="small" />
@@ -64,21 +98,23 @@ export function SearchVagas({ value, onChange, onSearch }: SearchVagasProps) {
       </form>
 
       {isOpen && sugestions.length > 0 && (
-        <ul className="absolute top-full mt-1 w-full bg-popover border rounded-md shadow-md z-50 overflow-hidden">
-          {sugestions.map((vaga) => (
-            <li key={vaga.id}
-            className='cursor-pointer p-2'
-              onClick={() => {
-                navigate(`vagas/${vaga.id}`)
-                setIsOpen(false)
-              }}>
-              <span className='font-medium'>{vaga.title}</span>
-              {vaga.tipo_vaga && (
-                <span> - {vaga.tipo_vaga}</span>
-              )}
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul className="absolute top-full mt-1 w-full bg-popover border rounded-md shadow-md z-50 overflow-hidden">
+            {sugestions.map((vaga, index) => (
+              <li
+                key={vaga.id}
+                className={`px-3 py-2 cursor-pointer text-sm ${
+                  index === activeIndex ? 'bg-accent' : 'hover:bg-accent'
+                }`}
+                onMouseEnter={() => setActiveIndex(index)}
+                onClick={() => goToVaga(vaga.id)}
+              >
+                <span className="font-medium">{vaga.title}</span>
+                {vaga.tipo_vaga && <span> - {vaga.tipo_vaga}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   )

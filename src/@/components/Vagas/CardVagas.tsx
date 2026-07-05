@@ -17,7 +17,7 @@ export function CardVagas({ vaga }: CardVagsProps) {
         <div className="flex justify-between mb-4">
           <h1 className="text-emerald-300">{vaga.title}</h1>
           <button
-            className="cursor-pointer text-blue-500"
+            className="cursor-pointer text-blue-500 underline"
             onClick={() => navigate(`/vagas/${vaga.id}`)}
           >
             Detalhes
