@@ -6,7 +6,8 @@ import { useOutletContext } from 'react-router-dom'
 import type { LayoutContext } from '@/types/layout-Context'
 
 export default function HomePage() {
-  const { search } = useOutletContext<LayoutContext>()
+  const outletContext = useOutletContext<LayoutContext | null>()
+  const search = outletContext?.search ?? ''
   const [{ page, term }, setQueryState] = useState({ page: 1, term: search })
 
   if (term !== search) {
@@ -31,7 +32,7 @@ export default function HomePage() {
 
       <ListVagas vagas={data?.vagas ?? []} />
 
-      <div className="lg:col-span-3  md:col-span-2 w-full flex justify-center">
+      <div className="lg:col-span-3 mb-14 lg:mb-0 md:col-span-2 md:mb-3 md:mt-1 w-full flex justify-center">
         <PaginationVagas
           page={page}
           hasMore={hasMore}
