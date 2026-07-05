@@ -17,7 +17,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 type AppHeaderProps = {
   search: string
   onSearchChange: (value: string) => void
-  onSearch: () => void
+  onSearch: (value: string) => void
 }
 
 export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) {
@@ -25,11 +25,13 @@ export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) 
     <div>
       <header className="flex w-full justify-between h-16 items-center border-b px-4">
         <div className="flex items-center gap-2">
-          <SidebarTrigger />
-          <h1 className="font-extrabold lg:text-2xl md:text-2xl text-fuchsia-700 ">Jobflow AI</h1>
+          <div className="md:hidden lg:hidden">
+            <SidebarTrigger />
+          </div>
+          <h1 className="font-extrabold lg:text-2xl md:text-xl text-fuchsia-700 ">Jobflow AI</h1>
         </div>
 
-        <div className="hidden md:block w-full md:w-70">
+        <div className="hidden md:block w-full md:w-60">
           <SearchVagas value={search} onChange={onSearchChange} onSearch={onSearch} />
         </div>
 
