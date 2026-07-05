@@ -12,6 +12,7 @@ import { ListVagas } from '@/@/components/Vagas/ListVagas'
 import AppLayout from '@/@/components/layout/Layout'
 import Filters from '@/pages/filters/Filters'
 import { PageDetailVaga } from '@/@/components/Vagas/VagaDetail'
+import PageVagas from '@/pages/vagas/vagas'
 
 export default function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ export default function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/vagas" element={<ListVagas />} />
+          <Route path="/PageVagas" element={<PageVagas />} />
           <Route path="/vagas/:id" element={<PageDetailVaga />} />
           <Route path="/filtros" element={<Filters />} />
           <Route path="/settings" element={<SettingsApp />} />
