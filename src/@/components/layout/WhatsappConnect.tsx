@@ -74,10 +74,10 @@ export function WhatsappConnect() {
         </Button>
       </div>
 
-      <div className="space-y-3 grid md:grid-cols-2 lg:grid-cols-2 lg:w-4xl  m-auto gap-4">
+      <div className="space-y-3 grid md:grid-cols-2  lg:grid-cols-2 lg:w-4xl md:gap-2">
         {connections?.map((conn) => (
-          <Card key={conn.id}>
-            <CardContent className="space-y-4 p-5">
+          <Card key={conn.id} className="">
+            <CardContent className="space-y-4 p-3 ">
               <div>
                 <CardAction>
                   <Button
@@ -101,7 +101,7 @@ export function WhatsappConnect() {
                 )}
               </div>
 
-              <div className="flex gap-1 mt-2 py-2">
+              <div className="flex gap-1 mt-2">
                 <Button
                   onClick={() => {
                     setActiveConnectId(conn.id)

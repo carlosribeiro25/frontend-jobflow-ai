@@ -3,23 +3,28 @@ import { SidebarProvider, SidebarInset } from '../ui/sidebar'
 import { AppHeader } from './Header'
 import AppSidebar from './Sidebar'
 import { useState, useEffect } from 'react'
-import { useDebounce } from '@/modules/auth/hooks/use-debounce'
 import { useQueryClient } from '@tanstack/react-query'
 
 export default function AppLayout() {
-  const [search, setSearch] = useState('')
-  const debouncedSearch = useDebounce(search, 400)
-   const queryClient = useQueryClient()
+  const [inputValue, setInputValue] = useState('')
+  const [submittedSearch, setSubmittedSearch] = useState('')
+  const queryClient = useQueryClient()
   const location = useLocation()
 
   useEffect(() => {
-    if(location.pathname !== '/') {
-      setSearch('')
+    if (location.pathname !== '/') {
+      const timer = window.setTimeout(() => {
+        setInputValue('')
+        setSubmittedSearch('')
+      }, 0)
+
+      return () => window.clearTimeout(timer)
     }
-  },[location.pathname])
+  }, [location.pathname])
 
   const handleSearch = () => {
-     queryClient.invalidateQueries({ queryKey: ['vagas', 'search'] })
+    setSubmittedSearch(inputValue.trim())
+    queryClient.invalidateQueries({ queryKey: ['vagas', 'search'] })
   }
 
   return (
@@ -27,10 +32,10 @@ export default function AppLayout() {
       <AppSidebar />
 
       <SidebarInset>
-        <AppHeader search={search} onSearchChange={setSearch} onSearch={handleSearch} />
+        <AppHeader search={inputValue} onSearchChange={setInputValue} onSearch={handleSearch} />
 
         <main className="flex-1 p-6">
-          <Outlet context={{ search: debouncedSearch }} />
+          <Outlet context={{ search: submittedSearch }} />
         </main>
       </SidebarInset>
     </SidebarProvider>
