@@ -13,12 +13,12 @@ import {
 import { sidebarItens } from '../config/sidebar-itens'
 import { useAuth } from '@/modules/auth/context/auth-context'
 import { Button } from '../ui/button'
-import { useSidebar} from "@/@/components/ui/sidebar"
+import { useSidebar } from '@/modules/auth/hooks/use-sidebar'
 
 export default function AppSidebar() {
   const { user } = useAuth()
   const userData = user?.userData
-  const {setOpenMobile} = useSidebar()
+  const { setOpenMobile } = useSidebar()
 
   return (
     <Sidebar collapsible="icon">
@@ -30,10 +30,10 @@ export default function AppSidebar() {
             </div>
             <span className="font-semibold md:text-sm text-green-400">Jobflow</span>
             <span className="md:text-sm items-center flex">de {userData?.name} </span>
-            <div className='ml-11 md:hidden  '>
-            <Button variant='secondary' onClick={() => setOpenMobile(false)}>
-              X
-            </Button>
+            <div className="ml-11 md:hidden  ">
+              <Button variant="secondary" onClick={() => setOpenMobile(false)}>
+                X
+              </Button>
             </div>
           </div>
         </SidebarHeader>

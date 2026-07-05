@@ -10,6 +10,11 @@ import { Button } from '@/@/components/ui/button'
 import { Input } from '@/@/components/ui/input'
 import { Separator } from '@/@/components/ui/separator'
 import {
+  SidebarContext,
+  type SidebarContextProps,
+  useSidebar,
+} from '@/modules/auth/hooks/use-sidebar'
+import {
   Sheet,
   SheetContent,
   SheetDescription,
@@ -26,27 +31,6 @@ const SIDEBAR_WIDTH = '18rem'
 const SIDEBAR_WIDTH_MOBILE = '16rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
-
-type SidebarContextProps = {
-  state: 'expanded' | 'collapsed'
-  open: boolean
-  setOpen: (open: boolean) => void
-  openMobile: boolean
-  setOpenMobile: (open: boolean) => void
-  isMobile: boolean
-  toggleSidebar: () => void
-}
-
-const SidebarContext = React.createContext<SidebarContextProps | null>(null)
-
-export function useSidebar() {
-  const context = React.useContext(SidebarContext)
-  if (!context) {
-    throw new Error('useSidebar must be used within a SidebarProvider.')
-  }
-
-  return context
-}
 
 function SidebarProvider({
   defaultOpen = true,

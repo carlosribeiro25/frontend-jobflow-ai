@@ -46,17 +46,17 @@ export function SearchVagas({ value, onChange, onSearch }: SearchVagasProps) {
     if (!isOpen || sugestions.length === 0) return
 
     if (e.key === 'ArrowDown') {
-      e.preventDefault() // evita mover o cursor do input
+      e.preventDefault() 
       setActiveIndex((prev) => (prev + 1) % sugestions.length)
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setActiveIndex((prev) => (prev - 1 + sugestions.length) % sugestions.length)
     } else if (e.key === 'Enter') {
       if (activeIndex >= 0) {
-        e.preventDefault() // impede o submit do form
+        e.preventDefault() 
         goToVaga(sugestions[activeIndex].id)
       }
-      // se activeIndex === -1, deixa o form submeter normalmente (onSearch)
+      
     } else if (e.key === 'Escape') {
       setIsOpen(false)
       setActiveIndex(-1)
