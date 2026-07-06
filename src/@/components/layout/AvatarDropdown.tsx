@@ -36,6 +36,7 @@ export function AvatarMenu() {
           <span className="font-semibold">{userData?.name ?? 'Usuário'}</span>
           <span className="text-xs text-muted-foreground font-normal">{userData?.email ?? ''}</span>
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>Perfil</DropdownMenuItem>

@@ -6,17 +6,16 @@ import {
   SidebarSeparator,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarHeader
+  SidebarHeader,
 } from '@/@/components/ui/sidebar'
 import { sidebarItens } from '../config/sidebar-itens'
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import { useAuth } from '@/modules/auth/context/auth-context'
 import { Button } from '../ui/button'
 import { useSidebar } from '@/modules/auth/hooks/use-sidebar'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
-import { cn } from '@/@/lib/utils';
-
+import { cn } from '@/@/lib/utils'
 
 export default function AppSidebar() {
   const { user } = useAuth()
@@ -24,7 +23,7 @@ export default function AppSidebar() {
   const { setOpenMobile, open, setOpen, isMobile } = useSidebar()
 
   return (
-    <Sidebar collapsible="icon" >
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarHeader>
           <div className="flex h-10 gap-2 justify-between items-center tracking-widest">
@@ -34,21 +33,21 @@ export default function AppSidebar() {
                   <TooltipTrigger asChild>
                     {open ? (
                       <Button
-                        variant='ghost'
-                        size='icon'
-                        className='cursor-pointer'
-                        onClick={() => setOpen(false)}>
+                        variant="ghost"
+                        size="icon"
+                        className="cursor-pointer"
+                        onClick={() => setOpen(false)}
+                      >
                         <KeyboardDoubleArrowLeftIcon />
                       </Button>
-
                     ) : (
                       <div onClick={() => setOpen(true)}>
-                        <KeyboardDoubleArrowRightIcon className='cursor-pointer' />
+                        <KeyboardDoubleArrowRightIcon className="cursor-pointer" />
                       </div>
                     )}
                   </TooltipTrigger>
-                  <TooltipContent side='right'>
-                    {open ? "Fechar Barra lateral" : "Abrir Barra lateral"}
+                  <TooltipContent side="right">
+                    {open ? 'Fechar Barra lateral' : 'Abrir Barra lateral'}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -81,7 +80,7 @@ export default function AppSidebar() {
                 {({ isActive }) => (
                   <SidebarMenuButton isActive={isActive}>
                     <item.icon />
-                    <span >{item.title}</span>
+                    <span>{item.title}</span>
                   </SidebarMenuButton>
                 )}
               </NavLink>

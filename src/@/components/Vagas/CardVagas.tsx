@@ -48,7 +48,7 @@ export function CardVagas({ vaga }: CardVagsProps) {
             Ver vaga
           </a>
         )}
-        <p className="font-semibold bg-blue-300">Modalidade: {vaga.modality}</p>
+        <p className="font-semibold">{vaga.modality}</p>
 
         <p className="font-semibold">
           Publicado em {''}

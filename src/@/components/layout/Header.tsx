@@ -10,9 +10,10 @@ import {
 } from '../ui/sheet'
 import { SidebarTrigger } from '../ui/sidebar'
 import { SearchVagas } from '../Vagas/SearchVagas'
-import { AvatarMenu } from './AvatarDropdown'
+
 import SearchIcon from '@mui/icons-material/Search'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+import { AvatarMenu } from './AvatarDropdown'
 
 type AppHeaderProps = {
   search: string
@@ -31,7 +32,7 @@ export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) 
           <h1 className="font-extrabold lg:text-2xl md:text-xl text-fuchsia-700 ">Jobflow AI</h1>
         </div>
 
-        <div className="hidden md:block w-full md:w-60">
+        <div className="hidden md:block md:w-70 lg:w-xl">
           <SearchVagas value={search} onChange={onSearchChange} onSearch={onSearch} />
         </div>
 
@@ -46,7 +47,6 @@ export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) 
               <VisuallyHidden>
                 <SheetHeader>
                   <SheetTitle>Buscar Vagas</SheetTitle>
-
                   <SheetDescription>
                     Digite o nome da vaga para realizar a pesquisa
                   </SheetDescription>
