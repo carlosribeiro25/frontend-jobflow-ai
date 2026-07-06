@@ -24,13 +24,13 @@ export default function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarHeader>
-          <div className="flex gap-2 items-center ml-1 tracking-widest">
-            <div className="hidden  md:block ">
+          <div className="flex gap-2 justify-between items-center ml-1 tracking-widest">
+            <div className="hidden md:block">
               <SidebarTrigger />
             </div>
             <span className="font-semibold md:text-sm text-green-400">Jobflow</span>
-            <span className="md:text-sm items-center flex">de {userData?.name} </span>
-            <div className="ml-11 md:hidden  ">
+            <span className="md:text-sm mr-4">de {userData?.name} </span>
+            <div className="md:hidden">
               <Button variant="secondary" onClick={() => setOpenMobile(false)}>
                 X
               </Button>
