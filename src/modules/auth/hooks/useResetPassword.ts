@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { resetPassword, type ResetPasswordPayload } from '@/services/auth'
+import { resetPassword, type ResetPasswordPayload } from '@/routes/routesApi/auth'
 
 export function useResetPaasword() {
   return useMutation({

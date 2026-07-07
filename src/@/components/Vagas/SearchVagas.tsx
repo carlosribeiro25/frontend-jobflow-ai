@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { searchVagas } from '@/services/Vagas'
+import { getSearchVagas } from '@/routes/routesApi/GetSeachVagas'
 import { Input } from '../ui/input'
 import SearchIcon from '@mui/icons-material/Search'
 
@@ -20,7 +20,7 @@ export function SearchVagas({ value, onChange, onSearch }: SearchVagasProps) {
 
   const { data } = useQuery({
     queryKey: ['vagas', 'sugestions', value],
-    queryFn: () => searchVagas(value, 1),
+    queryFn: () => getSearchVagas(value, 1),
     enabled: value.trim().length > 1,
   })
 

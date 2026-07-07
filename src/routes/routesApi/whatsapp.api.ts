@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios'
 import { type WhatsappGroup, type WhatsappConnection } from '@/types/whatsapp'
-import { api } from './api'
+import { api } from '../../services/api'
 
 export const whatsappApi = {
   listConnections: () => api.get<WhatsappConnection[]>('/whatsapp/connections').then((r) => r.data),

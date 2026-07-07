@@ -1,8 +1,8 @@
 import HomeFilledIcon from '@mui/icons-material/HomeFilled'
-import EngineeringIcon from '@mui/icons-material/Engineering'
+import FilterListAltIcon from '@mui/icons-material/FilterListAlt'
 import SettingsIcon from '@mui/icons-material/Settings'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
-import WorkIcon from '@mui/icons-material/Work'
+import UnarchiveIcon from '@mui/icons-material/Unarchive'
 
 export const sidebarItens = [
   {
@@ -11,14 +11,14 @@ export const sidebarItens = [
     icon: HomeFilledIcon,
   },
   {
-    title: 'Vagas',
+    title: 'Upload Vagas',
     path: '/PageVagas',
-    icon: WorkIcon,
+    icon: UnarchiveIcon,
   },
   {
-    title: 'Buscar por filtro',
+    title: 'Buscar por filtros',
     path: '/filtros',
-    icon: EngineeringIcon,
+    icon: FilterListAltIcon,
   },
   {
     title: 'Configurações',

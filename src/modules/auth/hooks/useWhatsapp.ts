@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { whatsappApi } from '@/services/whatsapp.api'
+import { whatsappApi } from '@/routes/routesApi/whatsapp.api'
 
 export const whatsappKeys = {
   connections: ['whatsapp', 'connections'] as const,

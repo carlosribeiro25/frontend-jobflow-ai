@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchVagas, searchVagas } from '@/services/Vagas'
+import { fetchVagas } from '@/routes/routesApi/Vagas'
+import { getSearchVagas } from '@/routes/routesApi/GetSeachVagas'
 
 const LIMIT = 12
 
@@ -8,7 +9,7 @@ export function useVagas(page: number, search: string) {
 
   const query = useQuery({
     queryKey: searching ? ['vagas', 'search', search, page] : ['vagas', 'list', page],
-    queryFn: () => (searching ? searchVagas(search, page) : fetchVagas('', page)),
+    queryFn: () => (searching ? getSearchVagas(search, page) : fetchVagas('', page)),
     refetchOnWindowFocus: false,
     placeholderData: (previous) => previous,
   })

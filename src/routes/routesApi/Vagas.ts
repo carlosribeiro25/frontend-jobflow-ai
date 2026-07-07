@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios'
-import { api } from './api'
+import { api } from '../../services/api'
 import type { Vaga } from '@/types/vaga'
 
 const LIMIT = 12
@@ -9,11 +9,6 @@ interface VagasApiResponse {
   hasMore: boolean
   total: number
   page: number
-}
-
-interface SearchApiResponse {
-  vagas: Vaga[]
-  total: number
 }
 
 export interface VagasResult {
@@ -46,15 +41,4 @@ export async function fetchVagas(q: string, page: number, limit = LIMIT): Promis
   }
 }
 
-export async function searchVagas(q: string, page: number): Promise<VagasResult> {
-  const { data } = await api.get<SearchApiResponse>('/search', {
-    params: { q, page, limit: LIMIT },
-  })
-
-  return {
-    vagas: data.vagas,
-    total: data.total,
-    hasMore: page * LIMIT < data.total,
-    page,
-  }
-}
+export { getSearchVagas } from './GetSeachVagas'

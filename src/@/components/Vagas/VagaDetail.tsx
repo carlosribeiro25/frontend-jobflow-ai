@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Vaga } from '@/types/vaga'
-import { getVagasId } from './GetVagaById'
+import { getVagasId } from '@/routes/routesApi/GetVagaById'
 import { Spinner } from '../ui/spinner'
 import { Card, CardContent } from '../ui/card'
 
