@@ -85,16 +85,21 @@ export default function Login() {
           ? error
           : new AxiosError<ApiErrorResponse>('Erro inesperado no login')
 
-      if (apiError.code === 'ECONNABORTED' || !apiError.response) {
+      const isConnectionFailure =
+        apiError.code === 'ECONNABORTED' ||
+        apiError.code === 'ERR_NETWORK' ||
+        !apiError.response
+
+      if (isConnectionFailure) {
         console.warn('Falha de conexao no login:', apiError.message)
       } else {
         console.error('Erro:', apiError.response?.data || apiError.message)
       }
 
-      if (apiError.code === 'ECONNABORTED') {
+      if (apiError.code === 'ECONNABORTED' || apiError.code === 'ERR_NETWORK') {
         addToast({
           message:
-            'O servidor demorou para responder ao login. Verifique se a API esta online e tente novamente.',
+            'A API demorou para responder ou não está disponível no momento. Verifique a conexão e tente novamente.',
           type: 'warning',
           duration: 5000,
         })
@@ -127,7 +132,7 @@ export default function Login() {
     }
   }
   return (
-    <div className="w-full overflow-hidden p-10 md:p-12 lg:w-md justify-center m-auto  items-center">
+    <div className="w-full min-h-screen  md:w-md overflow-hidden p-10 md:p-12 lg:w-md justify-center m-auto  items-center">
       <ToastContainer toasts={toasts} removeToast={removeToast} />
       <Card>
         <h1 className="mt-1 font-bold text-lg justify-center sm:text-2xl flex justify-items-center text-fuchsia-700 py-2">
@@ -136,7 +141,6 @@ export default function Login() {
         </h1>
         <CardHeader>
           <CardTitle>Faça login na sua conta</CardTitle>
-
           <CardDescription>Insira seu e-mail e senha para acessar sua conta.</CardDescription>
           <CardAction>
             <Link className="text-blue-400 " to="/CadastroUsuario">

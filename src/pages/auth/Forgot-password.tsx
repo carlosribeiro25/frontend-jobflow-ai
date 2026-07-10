@@ -12,6 +12,8 @@ import {
 import { Input } from '@/@/components/ui/input'
 import { Button } from '@/@/components/ui/button'
 import Alert from '@mui/material/Alert'
+import { Link } from 'react-router-dom'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -29,38 +31,53 @@ export function ForgotPassword() {
     : null
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      {isSuccess ? (
-        <Alert severity="info">Voçe receberá as instruções no seu email</Alert>
-      ) : (
-        <Card className="w-90 md:w-lg  m-auto">
-          <CardHeader>
-            <CardTitle>Recupere sua senha</CardTitle>
-            <CardDescription>Informe seu email para receber as intruções.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
-              <div className="flex gap-1">
-                <Input
-                  className="outline-none sm:text-base"
-                  value={email}
-                  type="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  placeholder="Digite seu email aqui..."
-                />
-                <CardAction>
-                  <Button type="submit" disabled={isPending}>
-                    {isPending ? 'Enviando...' : 'Enviar'}
-                  </Button>
-                </CardAction>
-              </div>
+    <>
+      <div>
+        <Link to='/login'
+        className='text-blue-500 mt-4'>
+          <KeyboardBackspaceIcon />
+          Voltar
+        </Link>
+      </div>
 
-              {errorMessage && <p role="alert">{errorMessage}</p>}
-            </form>
-          </CardContent>
-        </Card>
-      )}
-    </div>
+      <div className="min-h-screen  flex items-center justify-center ">
+
+        {isSuccess ? (
+          <Alert severity="info">Voçe receberá as instruções no seu email</Alert>
+        ) : (
+          <Card className="w-full m-3  md:w-md   ">
+            <CardHeader>
+              <CardTitle>Recupere sua senha</CardTitle>
+              <CardDescription>Informe seu email para receber as intruções.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit}>
+                <div className="flex gap-1">
+                  <Input
+                    className="text-xs md:text-sm  outline-none sm:text-base"
+                    value={email}
+                    type="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="Digite seu email aqui..."
+                  />
+                  <CardAction>
+                    <Button type="submit" disabled={isPending}>
+                      {isPending ? 'Enviando...' : 'Enviar'}
+                    </Button>
+                  </CardAction>
+                </div>
+
+                {errorMessage && <p role="alert">{errorMessage}</p>}
+              </form>
+            </CardContent>
+          </Card>
+
+
+        )}
+
+      </div>
+
+    </>
   )
 }

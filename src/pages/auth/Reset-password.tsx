@@ -7,6 +7,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { useToast } from '@/modules/auth/hooks/useToast'
 import { ToastContainer } from '@/@/components/ui/toast-container'
+import { Input } from '@/@/components/ui/input'
+import { Label } from '@/@/components/ui/label'
+import { Button } from '@/@/components/ui/button'
 
 export function ResetPassword() {
   const [searchParams] = useSearchParams()
@@ -76,7 +79,7 @@ export function ResetPassword() {
   const displayError = localError ?? serverError
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+    <div className="flex min-h-screen items-center justify-center">
       <ToastContainer toasts={toasts} removeToast={removeToast} />
 
       {isSuccess ? (
@@ -95,18 +98,18 @@ export function ResetPassword() {
       ) : (
         <Card className="box-content w-90 m-auto">
           <CardHeader>
-            <CardTitle className="text-center sm:text-2xl ">
-              <h1>Redefina sua senha</h1>
+            <CardTitle className="text-center md:text-2xl ">
+              <h1 className='text-lg xs:text-xs md:text-sm '>Redefina sua senha</h1>
             </CardTitle>
           </CardHeader>
-          <CardContent className="">
+          <CardContent>
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col mb-2 relative ">
-                <label className="mb-1" htmlFor="newPaasword">
+                <Label className="mb-1" htmlFor="newPaasword">
                   Nova senha
-                </label>
-                <input
-                  className="py-2 px-2 rounded outline-none bg-gray-100"
+                </Label>
+                <Input
+                  className="py-4 px-2"
                   type={showPassword ? 'text' : 'password'}
                   name="newPassword"
                   value={newPassword}
@@ -114,9 +117,10 @@ export function ResetPassword() {
                   required
                   placeholder="Mínimo 6 caracteres*"
                 />
-                <button
+                <Button
+                variant={'ghost'}
                   type="button"
-                  className=" absolute right-2 mt-8 text-gray-500 "
+                  className="absolute right-0 mt-5 text-gray-500 "
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
                   {showPassword ? (
@@ -124,15 +128,15 @@ export function ResetPassword() {
                   ) : (
                     <VisibilityOffIcon fontSize="small" />
                   )}
-                </button>
+                </Button>
               </div>
 
               <div className="mt-2 flex relative flex-col">
-                <label htmlFor="confirPassword " className="mb-1">
+                <Label htmlFor="confirPassword " className="mb-1">
                   Confirmar senha
-                </label>
-                <input
-                  className="bg-gray-100 rounded py-2 px-2 outline-none"
+                </Label>
+                <Input
+                  className="py-4 px-2 outline-none"
                   type={confirmShowPassword ? 'text' : 'password'}
                   name="confirPassword"
                   value={confirmPassword}
@@ -141,9 +145,10 @@ export function ResetPassword() {
                   placeholder="Repita a senha*"
                 />
 
-                <button
+                <Button
                   type="button"
-                  className="absolute right-2 mt-8 text-gray-500"
+                  variant={'ghost'}
+                  className="absolute right-0 mt-5 text-gray-500"
                   onClick={() => setConfirmShowPassword((prev) => !prev)}
                 >
                   {confirmShowPassword ? (
@@ -151,18 +156,18 @@ export function ResetPassword() {
                   ) : (
                     <VisibilityOffIcon fontSize="small" />
                   )}
-                </button>
+                </Button>
               </div>
               {displayError && <p role="alert">{displayError}</p>}
 
-              <button
+              <Button
                 type="submit"
-                className="py-2 mt-2 text-amber-50 px-2 bg-foreground w-full rounded"
+                className="py-2 mt-4 px-2 w-full"
                 disabled={isPending}
               >
                 {' '}
                 {isPending ? 'Salvando...' : 'Redefinir senha'}
-              </button>
+              </Button>
 
               <div className="text-blue-400 text-center mt-2">
                 <Link className="" to="/login">
