@@ -7,7 +7,6 @@ import SearchIcon from '@mui/icons-material/Search'
 
 type SearchVagasProps = {
   value: string
-
   onChange: (value: string) => void
   onSearch: (value: string) => void
 }
