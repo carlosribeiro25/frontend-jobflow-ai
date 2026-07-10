@@ -86,9 +86,7 @@ export default function Login() {
           : new AxiosError<ApiErrorResponse>('Erro inesperado no login')
 
       const isConnectionFailure =
-        apiError.code === 'ECONNABORTED' ||
-        apiError.code === 'ERR_NETWORK' ||
-        !apiError.response
+        apiError.code === 'ECONNABORTED' || apiError.code === 'ERR_NETWORK' || !apiError.response
 
       if (isConnectionFailure) {
         console.warn('Falha de conexao no login:', apiError.message)

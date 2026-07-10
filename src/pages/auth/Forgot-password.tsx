@@ -13,7 +13,7 @@ import { Input } from '@/@/components/ui/input'
 import { Button } from '@/@/components/ui/button'
 import Alert from '@mui/material/Alert'
 import { Link } from 'react-router-dom'
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 
 export function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -33,15 +33,13 @@ export function ForgotPassword() {
   return (
     <>
       <div>
-        <Link to='/login'
-        className='text-blue-500 mt-4'>
+        <Link to="/login" className="text-blue-500 mt-4">
           <KeyboardBackspaceIcon />
           Voltar
         </Link>
       </div>
 
       <div className="min-h-screen  flex items-center justify-center ">
-
         {isSuccess ? (
           <Alert severity="info">Voçe receberá as instruções no seu email</Alert>
         ) : (
@@ -72,12 +70,8 @@ export function ForgotPassword() {
               </form>
             </CardContent>
           </Card>
-
-
         )}
-
       </div>
-
     </>
   )
 }

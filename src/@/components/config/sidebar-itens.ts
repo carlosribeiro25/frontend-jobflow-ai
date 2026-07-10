@@ -12,7 +12,7 @@ export const sidebarItens = [
   },
   {
     title: 'Upload Vagas',
-    path: '/PageVagas',
+    path: '/cadastrar-vagas',
     icon: UnarchiveIcon,
   },
   {

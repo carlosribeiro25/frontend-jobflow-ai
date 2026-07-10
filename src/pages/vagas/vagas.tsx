@@ -1,44 +1,60 @@
-import type { RegisterVagaPayload } from "@/types/create-vagas"
-import type { RegisterVagaResponse } from "@/types/create-vagas"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import React, { useRef, useState } from "react"
-import { registerVaga } from "@/routes/routesApi/register-vaga"
-import { AxiosError } from "axios"
-import { ToastContainer } from "@/@/components/ui/toast-container"
-import { useToast } from "@/modules/auth/hooks/useToast"
-import { Card, CardContent, CardHeader, CardTitle } from "@/@/components/ui/card"
-import { Label } from "@/@/components/ui/label"
-import { Input } from "@/@/components/ui/input"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/@/components/ui/select"
-import { tipoVagas, modality, tiposCategorias, type ModalityItem, type TipoCategotiasItem, type TipoVagasItem } from "@/@/components/config/itensSelectVaga"
-import { Textarea } from "@/@/components/ui/textarea"
-import { Field, FieldLabel } from "@/@/components/ui/field"
-import { Button } from "@/@/components/ui/button"
+import type { RegisterVagaPayload } from '@/types/create-vagas'
+import type { RegisterVagaResponse } from '@/types/create-vagas'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import React, { useRef, useState } from 'react'
+import { registerVaga } from '@/routes/routesApi/register-vaga'
+import { AxiosError } from 'axios'
+import { ToastContainer } from '@/@/components/ui/toast-container'
+import { useToast } from '@/modules/auth/hooks/useToast'
+import { Card, CardContent, CardHeader, CardTitle } from '@/@/components/ui/card'
+import { Label } from '@/@/components/ui/label'
+import { Input } from '@/@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/@/components/ui/select'
+import {
+  tipoVagas,
+  modality,
+  tiposCategorias,
+  type ModalityItem,
+  type TipoCategotiasItem,
+  type TipoVagasItem,
+} from '@/@/components/config/itensSelectVaga'
+import { Textarea } from '@/@/components/ui/textarea'
+import { Field, FieldLabel } from '@/@/components/ui/field'
+import { Button } from '@/@/components/ui/button'
 
 export function RegisterVaga() {
-
   const queryClient = useQueryClient()
   const { toasts, removeToast, addToast } = useToast()
   const modalityOptions = modality.filter((item): item is ModalityItem => item.value !== null)
-  const categoryOptions = tiposCategorias.filter((item): item is TipoCategotiasItem => item.value !== null)
+  const categoryOptions = tiposCategorias.filter(
+    (item): item is TipoCategotiasItem => item.value !== null
+  )
   const typeVagaOptions = tipoVagas.filter((item): item is TipoVagasItem => item.value !== null)
   const [salaryValue, setSalaryValue] = useState<number | undefined>()
-  const [salaryInput, setSalaryInput] = useState("")
-  const salaryDigitsRef = useRef("")
+  const [salaryInput, setSalaryInput] = useState('')
+  const salaryDigitsRef = useRef('')
 
   const [form, setForm] = useState<RegisterVagaPayload>({
-    title: "",
-    tipo_vaga: "",
-    description: "",
-    category: "",
-    company: "",
-    requirements: "",
+    title: '',
+    tipo_vaga: '',
+    description: '',
+    category: '',
+    company: '',
+    requirements: '',
     modality: null,
     salary: null,
-    benefits: "",
-    contact: "",
-    link: "",
-    location: ""
+    benefits: '',
+    contact: '',
+    link: '',
+    location: '',
   })
 
   const mutation = useMutation({
@@ -46,26 +62,26 @@ export function RegisterVaga() {
 
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ['vagas']
+        queryKey: ['vagas'],
       })
       setForm({
-        title: "",
-        message: "",
-        tipo_vaga: "",
-        description: "",
-        category: "",
-        company: "",
-        requirements: "",
+        title: '',
+        message: '',
+        tipo_vaga: '',
+        description: '',
+        category: '',
+        company: '',
+        requirements: '',
         modality: null,
         salary: null,
-        benefits: "",
-        contact: "",
-        link: "",
-        location: ""
+        benefits: '',
+        contact: '',
+        link: '',
+        location: '',
       })
       setSalaryValue(undefined)
-      setSalaryInput("")
-      salaryDigitsRef.current = ""
+      setSalaryInput('')
+      salaryDigitsRef.current = ''
       addToast({
         type: 'success',
         message: data.message || 'Vaga cadastrada com sucesso 🎉🎉',
@@ -73,17 +89,18 @@ export function RegisterVaga() {
       })
     },
     onError: (error: unknown) => {
-      const apiError = error instanceof AxiosError ? (error as AxiosError<RegisterVagaResponse>) : null
+      const apiError =
+        error instanceof AxiosError ? (error as AxiosError<RegisterVagaResponse>) : null
 
       if (apiError?.response?.status === 400) {
         addToast({
           message: 'Erro ao cadastrar vaga',
-          type: "error",
-          duration: 3000
+          type: 'error',
+          duration: 3000,
         })
       }
-      return;
-    }
+      return
+    },
   })
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -106,51 +123,51 @@ export function RegisterVaga() {
   }
 
   const formatCurrency = (value: number | undefined) => {
-    if (value === undefined) return "";
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    if (value === undefined) return ''
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
-    }).format(value);
-  };
+    }).format(value)
+  }
 
   const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputType = (e.nativeEvent as InputEvent).inputType
     const insertedData = (e.nativeEvent as InputEvent).data
 
     const nextDigits = (() => {
-      if (inputType === "deleteContentBackward" || inputType === "deleteContentForward") {
+      if (inputType === 'deleteContentBackward' || inputType === 'deleteContentForward') {
         return salaryDigitsRef.current.slice(0, -1)
       }
 
-      if (inputType === "insertText" && insertedData && /\d/.test(insertedData)) {
+      if (inputType === 'insertText' && insertedData && /\d/.test(insertedData)) {
         return `${salaryDigitsRef.current}${insertedData}`
       }
 
-      if (inputType === "insertFromPaste" || inputType === "insertReplacementText") {
-        return e.target.value.replace(/\D/g, "")
+      if (inputType === 'insertFromPaste' || inputType === 'insertReplacementText') {
+        return e.target.value.replace(/\D/g, '')
       }
 
-      if (inputType === "deleteByCut" || e.target.value === "") {
-        return ""
+      if (inputType === 'deleteByCut' || e.target.value === '') {
+        return ''
       }
 
-      return e.target.value.replace(/\D/g, "")
+      return e.target.value.replace(/\D/g, '')
     })()
 
     salaryDigitsRef.current = nextDigits
 
-    if (nextDigits === "") {
+    if (nextDigits === '') {
       setSalaryValue(undefined)
-      setSalaryInput("")
+      setSalaryInput('')
       return
     }
 
     const numericValue = Number(nextDigits)
     setSalaryValue(numericValue)
     setSalaryInput(formatCurrency(numericValue))
-  };
+  }
 
   return (
     <div>
@@ -177,13 +194,16 @@ export function RegisterVaga() {
                 onValueChange={(value) => setForm((prev) => ({ ...prev, tipo_vaga: value }))}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder='Selecione' />
+                  <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Selecione o tipo da vaga</SelectLabel>
                     {typeVagaOptions.map((item) => (
-                      <SelectItem key={item.value ?? "Nao informado"} value={item.value ?? "Nao informado"}>
+                      <SelectItem
+                        key={item.value ?? 'Nao informado'}
+                        value={item.value ?? 'Nao informado'}
+                      >
                         {item.label}
                       </SelectItem>
                     ))}
@@ -204,10 +224,11 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div >
+            <div>
               <Field>
                 <FieldLabel htmlFor="requirements">Requisitos</FieldLabel>
-                <Textarea value={form.requirements}
+                <Textarea
+                  value={form.requirements}
                   id="requirements"
                   name="requirements"
                   placeholder="Requisitos da vaga"
@@ -240,7 +261,7 @@ export function RegisterVaga() {
               />
             </div>
 
-              <div>
+            <div>
               <Label htmlFor="location">Local da vaga :</Label>
               <Input
                 id="location"
@@ -271,13 +292,16 @@ export function RegisterVaga() {
                 onValueChange={(value) => setForm((prev) => ({ ...prev, category: value }))}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder='Selecione' />
+                  <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Selecione a área de atuação</SelectLabel>
                     {categoryOptions.map((item) => (
-                      <SelectItem key={item.value ?? "Nao informado"} value={item.value ?? "Nao informado"}>
+                      <SelectItem
+                        key={item.value ?? 'Nao informado'}
+                        value={item.value ?? 'Nao informado'}
+                      >
                         {item.label}
                       </SelectItem>
                     ))}
@@ -286,7 +310,7 @@ export function RegisterVaga() {
               </Select>
             </div>
 
-            <div >
+            <div>
               <Label htmlFor="company">Empresa :</Label>
               <Input
                 id="company"
@@ -302,7 +326,12 @@ export function RegisterVaga() {
               <span>Modalidade:</span>
               <Select
                 value={form.modality ?? undefined}
-                onValueChange={(value) => setForm((prev) => ({ ...prev, modality: value as RegisterVagaPayload['modality'] }))}
+                onValueChange={(value) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    modality: value as RegisterVagaPayload['modality'],
+                  }))
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione" />
@@ -310,7 +339,10 @@ export function RegisterVaga() {
                 <SelectContent>
                   <SelectGroup>
                     {modalityOptions.map((item) => (
-                      <SelectItem key={item.value ?? "Nao informado"} value={item.value ?? "Nao informado"}>
+                      <SelectItem
+                        key={item.value ?? 'Nao informado'}
+                        value={item.value ?? 'Nao informado'}
+                      >
                         {item.label}
                       </SelectItem>
                     ))}
@@ -334,7 +366,6 @@ export function RegisterVaga() {
           </form>
         </CardContent>
       </Card>
-
     </div>
   )
 }

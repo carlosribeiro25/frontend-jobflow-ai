@@ -99,7 +99,7 @@ export function ResetPassword() {
         <Card className="box-content w-90 m-auto">
           <CardHeader>
             <CardTitle className="text-center md:text-2xl ">
-              <h1 className='text-lg xs:text-xs md:text-sm '>Redefina sua senha</h1>
+              <h1 className="text-lg xs:text-xs md:text-sm ">Redefina sua senha</h1>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -118,7 +118,7 @@ export function ResetPassword() {
                   placeholder="Mínimo 6 caracteres*"
                 />
                 <Button
-                variant={'ghost'}
+                  variant={'ghost'}
                   type="button"
                   className="absolute right-0 mt-5 text-gray-500 "
                   onClick={() => setShowPassword((prev) => !prev)}
@@ -160,11 +160,7 @@ export function ResetPassword() {
               </div>
               {displayError && <p role="alert">{displayError}</p>}
 
-              <Button
-                type="submit"
-                className="py-2 mt-4 px-2 w-full"
-                disabled={isPending}
-              >
+              <Button type="submit" className="py-2 mt-4 px-2 w-full" disabled={isPending}>
                 {' '}
                 {isPending ? 'Salvando...' : 'Redefinir senha'}
               </Button>
