@@ -1,10 +1,14 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
+const configuredApiUrl = (import.meta.env.VITE_API_URL ?? '').trim()
+const normalizedBaseUrl = configuredApiUrl ? configuredApiUrl.replace(/\/$/, '') : '/api'
+const timeoutMs = Number(import.meta.env.VITE_API_TIMEOUT_MS ?? 20000)
+
 export const api = axios.create({
-  baseURL: import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.DEV ? '/api' : normalizedBaseUrl,
   withCredentials: true,
-  timeout: 15000,
+  timeout: Number.isFinite(timeoutMs) && timeoutMs > 0 ? timeoutMs : 20000,
 })
 
 api.interceptors.request.use((config) => {
