@@ -26,7 +26,7 @@ export const tiposCategorias = [
   { label: 'Administração', value: 'Administracao' },
   { label: 'Comercial', value: 'Comercial' },
   { label: 'Contabilidade', value: 'Contabilidade' },
-  { label: 'Desenvolvimento de software', value: 'Desenvolvimento de software' },
+  { label: 'Dev de software', value: 'Desenvolvimento de software' },
   { label: 'Design', value: 'Design' },
   { label: 'Direito', value: 'Direito' },
   { label: 'Educação', value: 'Educacao' },

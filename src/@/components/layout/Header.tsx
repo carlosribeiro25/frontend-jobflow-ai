@@ -23,10 +23,10 @@ type AppHeaderProps = {
 
 export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) {
   return (
-    <div>
-      <header className="flex w-full justify-between h-16 items-center border-b px-4">
+    <div className=''>
+      <header className=" inset-x-0 top-0 z-50 flex h-16 w-full items-center justify-between border-b bg-background/95 px-4 backdrop-blur supports-backdrop-filter]:bg-background/60">
         <div className="flex items-center gap-2">
-          <div className="md:hidden lg:hidden">
+          <div className="md:hidden">
             <SidebarTrigger />
           </div>
           <h1 className="font-extrabold lg:text-2xl md:text-xl text-fuchsia-700 ">Jobflow AI</h1>

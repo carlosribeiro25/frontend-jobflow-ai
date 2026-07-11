@@ -11,7 +11,7 @@ export const sidebarItens = [
     icon: HomeFilledIcon,
   },
   {
-    title: 'Upload Vagas',
+    title: 'Cadastro de Vagas',
     path: '/cadastrar-vagas',
     icon: UnarchiveIcon,
   },
@@ -21,13 +21,14 @@ export const sidebarItens = [
     icon: FilterListAltIcon,
   },
   {
-    title: 'Configurações',
-    path: '/settings',
-    icon: SettingsIcon,
-  },
-  {
     title: 'Conectar com o Whatsapp',
     path: '/conectWhatsapp',
     icon: WhatsAppIcon,
   },
+  {
+    title: 'Configurações',
+    path: '/settings',
+    icon: SettingsIcon,
+  },
+  
 ]

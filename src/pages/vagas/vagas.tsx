@@ -169,52 +169,135 @@ export function RegisterVaga() {
     setSalaryInput(formatCurrency(numericValue))
   }
 
+  const resetForm = () => {
+    setForm({
+      title: '',
+      message: '',
+      tipo_vaga: '',
+      description: '',
+      category: '',
+      company: '',
+      requirements: '',
+      modality: null,
+      salary: null,
+      benefits: '',
+      contact: '',
+      link: '',
+      location: '',
+    })
+  }
+
   return (
     <div>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-      <Card>
+      <Card className='lg:w-2xl h-70 overflow-auto'>
         <CardHeader>
-          <CardTitle>Cadastre uma vaga</CardTitle>
+          <CardTitle>Cadastre uma nova vaga</CardTitle>
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={handleSubmit}>
             <Label htmlFor="title">Titulo</Label>
             <Input
+              required
+              className='mt-2'
               id="title"
               type="text"
               value={form.title}
               placeholder="Titulo da vaga..."
               onChange={(e) => setForm({ ...form, title: e.target.value })}
             />
-            <div className="flex gap-2">
-              <Label htmlFor="tipo_vaga">Tipo</Label>
-              <Select
-                value={form.tipo_vaga || undefined}
-                onValueChange={(value) => setForm((prev) => ({ ...prev, tipo_vaga: value }))}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Selecione o tipo da vaga</SelectLabel>
-                    {typeVagaOptions.map((item) => (
-                      <SelectItem
-                        key={item.value ?? 'Nao informado'}
-                        value={item.value ?? 'Nao informado'}
-                      >
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+
+            <div className='grid grid-cols-2 justify-between sm:grid-cols-2 lg:grid-cols-3 mt-2'>
+              <div className="flex">
+                <Label htmlFor="tipo_vaga">Tipo: </Label>
+                <Select
+                  required
+                  value={form.tipo_vaga || undefined}
+                  onValueChange={(value) => setForm((prev) => ({ ...prev, tipo_vaga: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Selecione o tipo da vaga</SelectLabel>
+                      {typeVagaOptions.map((item) => (
+                        <SelectItem
+                          key={item.value ?? 'Nao informado'}
+                          value={item.value ?? 'Nao informado'}
+                        >
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center">
+                <span>Modalidade:</span>
+                <Select
+                  required
+                  value={form.modality ?? undefined}
+                  onValueChange={(value) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      modality: value as RegisterVagaPayload['modality'],
+                    }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {modalityOptions.map((item) => (
+                        <SelectItem
+                          key={item.value ?? 'Nao informado'}
+                          value={item.value ?? 'Nao informado'}
+                        >
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex mt-2 md:mt-2 lg:mt-0">
+                <Label htmlFor="category">Área: </Label>
+                <Select
+                  required
+                  value={form.category || undefined}
+                  onValueChange={(value) => setForm((prev) => ({ ...prev, category: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Selecione a área de atuação</SelectLabel>
+                      {categoryOptions.map((item) => (
+                        <SelectItem
+                          key={item.value ?? 'Nao informado'}
+                          value={item.value ?? 'Nao informado'}
+                        >
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+
             </div>
 
-            <div>
+            <div className='mt-2'>
               <Label htmlFor="description">Descrição:</Label>
               <Input
+                className='mt-2'
                 id="description"
                 name="description"
                 type="text"
@@ -224,58 +307,66 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div>
+            <div className='mt-2'>
               <Field>
-                <FieldLabel htmlFor="requirements">Requisitos</FieldLabel>
+                <FieldLabel htmlFor="requirements">Requisitos: </FieldLabel>
                 <Textarea
                   value={form.requirements}
                   id="requirements"
                   name="requirements"
                   placeholder="Requisitos da vaga"
                   onChange={(e) => setForm({ ...form, requirements: e.target.value })}
+                  required
                 />
               </Field>
             </div>
 
-            <div>
+            <div className='mt-2'>
               <Label htmlFor="benefits">Beneficios:</Label>
               <Input
+                className='mt-2'
                 id="benefits"
                 name="benefits"
                 type="text"
                 value={form.benefits}
                 placeholder="Beneficios garantidos..."
                 onChange={(e) => setForm({ ...form, benefits: e.target.value })}
+                required
               />
             </div>
 
-            <div>
+            <div className='mt-2'>
               <Label htmlFor="contact">Contato:</Label>
               <Input
+                className='mt-2'
                 id="contact"
                 name="contact"
                 type="text"
                 value={form.contact}
                 placeholder="Email ou telefone de contato"
                 onChange={(e) => setForm({ ...form, contact: e.target.value })}
+                required
               />
             </div>
 
-            <div>
+            <div className='mt-2'>
               <Label htmlFor="location">Local da vaga :</Label>
               <Input
+                className='mt-2'
                 id="location"
                 name="location"
                 type="text"
                 value={form.location}
                 placeholder="Localização"
                 onChange={(e) => setForm({ ...form, location: e.target.value })}
+                required
               />
             </div>
 
-            <div>
+            <div className='mt-2'>
               <Label htmlFor="link">URL da vaga :</Label>
               <Input
+                className='mt-2'
                 id="link"
                 name="link"
                 type="text"
@@ -285,84 +376,37 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div className="flex gap-2">
-              <Label htmlFor="category">Área/Categoria :</Label>
-              <Select
-                value={form.category || undefined}
-                onValueChange={(value) => setForm((prev) => ({ ...prev, category: value }))}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Selecione a área de atuação</SelectLabel>
-                    {categoryOptions.map((item) => (
-                      <SelectItem
-                        key={item.value ?? 'Nao informado'}
-                        value={item.value ?? 'Nao informado'}
-                      >
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
+            <div className='mt-2'>
               <Label htmlFor="company">Empresa :</Label>
               <Input
+                className='mt-2'
                 id="company"
                 name="company"
                 type="text"
                 value={form.company}
                 placeholder="Informe o nome da empresa"
                 onChange={(e) => setForm({ ...form, company: e.target.value })}
+                required
               />
             </div>
 
-            <div className="flex gap-2 items-center">
-              <span>Modalidade:</span>
-              <Select
-                value={form.modality ?? undefined}
-                onValueChange={(value) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    modality: value as RegisterVagaPayload['modality'],
-                  }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {modalityOptions.map((item) => (
-                      <SelectItem
-                        key={item.value ?? 'Nao informado'}
-                        value={item.value ?? 'Nao informado'}
-                      >
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
+            <div className='mt-2'>
               <Label htmlFor="salary">Salário:</Label>
               <Input
+                className='mt-2'
                 id="salary"
                 name="salary"
                 type="text"
                 inputMode="numeric"
                 value={salaryInput}
                 onChange={handleSalaryChange}
+                required
               />
             </div>
-            <Button type="submit">Enviar Cadastro</Button>
+            <div className='mt-2 flex justify-center gap-2'>
+              <Button className='hover:bg-green-800 hover:text-amber-50' type="submit">Enviar Cadastro</Button>
+              <Button type='button' className='hover:bg-red-400 hover:text-amber-50' onClick={resetForm}>Desfazer Alterações</Button>
+            </div>
           </form>
         </CardContent>
       </Card>

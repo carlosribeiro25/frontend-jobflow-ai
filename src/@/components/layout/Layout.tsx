@@ -35,7 +35,7 @@ export default function AppLayout() {
       <SidebarInset>
         <AppHeader search={inputValue} onSearchChange={setInputValue} onSearch={handleSearch} />
 
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 ">
           <Outlet context={{ search: submittedSearch }} />
         </main>
         <div className="md:hidden">

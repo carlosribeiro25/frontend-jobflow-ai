@@ -68,7 +68,9 @@ export function PageDetailVaga() {
         <Card>
           <CardContent>
             <h1 className="text-emerald-300">{vaga.title}</h1>
-            <p>{vaga.description}</p>
+
+            <p >{vaga.description}</p>
+
             <p>Vaga do tipo {vaga.tipo_vaga}</p>
             <p>Categoria {vaga.category}</p>
             <p>Empresa: {vaga.company}</p>
