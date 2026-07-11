@@ -190,18 +190,17 @@ export function RegisterVaga() {
   return (
     <div>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-      <Card className='lg:w-2xl h-70 overflow-auto'>
+      <Card className="lg:w-2xl h-70 overflow-auto">
         <CardHeader>
           <CardTitle>Cadastre uma nova vaga</CardTitle>
         </CardHeader>
 
         <CardContent>
-          <form
-            onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <Label htmlFor="title">Titulo</Label>
             <Input
               required
-              className='mt-2'
+              className="mt-2"
               id="title"
               type="text"
               value={form.title}
@@ -209,7 +208,7 @@ export function RegisterVaga() {
               onChange={(e) => setForm({ ...form, title: e.target.value })}
             />
 
-            <div className='grid grid-cols-2 justify-between sm:grid-cols-2 lg:grid-cols-3 mt-2'>
+            <div className="grid grid-cols-2 justify-between sm:grid-cols-2 lg:grid-cols-3 mt-2">
               <div className="flex">
                 <Label htmlFor="tipo_vaga">Tipo: </Label>
                 <Select
@@ -291,13 +290,12 @@ export function RegisterVaga() {
                   </SelectContent>
                 </Select>
               </div>
-
             </div>
 
-            <div className='mt-2'>
+            <div className="mt-2">
               <Label htmlFor="description">Descrição:</Label>
               <Input
-                className='mt-2'
+                className="mt-2"
                 id="description"
                 name="description"
                 type="text"
@@ -307,7 +305,7 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div className='mt-2'>
+            <div className="mt-2">
               <Field>
                 <FieldLabel htmlFor="requirements">Requisitos: </FieldLabel>
                 <Textarea
@@ -321,10 +319,10 @@ export function RegisterVaga() {
               </Field>
             </div>
 
-            <div className='mt-2'>
+            <div className="mt-2">
               <Label htmlFor="benefits">Beneficios:</Label>
               <Input
-                className='mt-2'
+                className="mt-2"
                 id="benefits"
                 name="benefits"
                 type="text"
@@ -335,10 +333,10 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div className='mt-2'>
+            <div className="mt-2">
               <Label htmlFor="contact">Contato:</Label>
               <Input
-                className='mt-2'
+                className="mt-2"
                 id="contact"
                 name="contact"
                 type="text"
@@ -349,10 +347,10 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div className='mt-2'>
+            <div className="mt-2">
               <Label htmlFor="location">Local da vaga :</Label>
               <Input
-                className='mt-2'
+                className="mt-2"
                 id="location"
                 name="location"
                 type="text"
@@ -363,10 +361,10 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div className='mt-2'>
+            <div className="mt-2">
               <Label htmlFor="link">URL da vaga :</Label>
               <Input
-                className='mt-2'
+                className="mt-2"
                 id="link"
                 name="link"
                 type="text"
@@ -376,10 +374,10 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div className='mt-2'>
+            <div className="mt-2">
               <Label htmlFor="company">Empresa :</Label>
               <Input
-                className='mt-2'
+                className="mt-2"
                 id="company"
                 name="company"
                 type="text"
@@ -390,10 +388,10 @@ export function RegisterVaga() {
               />
             </div>
 
-            <div className='mt-2'>
+            <div className="mt-2">
               <Label htmlFor="salary">Salário:</Label>
               <Input
-                className='mt-2'
+                className="mt-2"
                 id="salary"
                 name="salary"
                 type="text"
@@ -403,9 +401,17 @@ export function RegisterVaga() {
                 required
               />
             </div>
-            <div className='mt-2 flex justify-center gap-2'>
-              <Button className='hover:bg-green-800 hover:text-amber-50' type="submit">Enviar Cadastro</Button>
-              <Button type='button' className='hover:bg-red-400 hover:text-amber-50' onClick={resetForm}>Desfazer Alterações</Button>
+            <div className="mt-2 flex justify-center gap-2">
+              <Button className="hover:bg-green-800 hover:text-amber-50" type="submit">
+                Enviar Cadastro
+              </Button>
+              <Button
+                type="button"
+                className="hover:bg-red-400 hover:text-amber-50"
+                onClick={resetForm}
+              >
+                Desfazer Alterações
+              </Button>
             </div>
           </form>
         </CardContent>

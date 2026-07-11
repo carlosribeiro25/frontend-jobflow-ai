@@ -23,7 +23,7 @@ type AppHeaderProps = {
 
 export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) {
   return (
-    <div className=''>
+    <div className="">
       <header className=" inset-x-0 top-0 z-50 flex h-16 w-full items-center justify-between border-b bg-background/95 px-4 backdrop-blur supports-backdrop-filter]:bg-background/60">
         <div className="flex items-center gap-2">
           <div className="md:hidden">
