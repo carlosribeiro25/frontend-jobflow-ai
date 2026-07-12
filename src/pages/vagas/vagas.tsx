@@ -6,7 +6,7 @@ import { registerVaga } from '@/routes/routesApi/register-vaga'
 import { AxiosError } from 'axios'
 import { ToastContainer } from '@/@/components/ui/toast-container'
 import { useToast } from '@/modules/auth/hooks/useToast'
-import { Card, CardContent, CardHeader, CardTitle } from '@/@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/@/components/ui/card'
 import { Label } from '@/@/components/ui/label'
 import { Input } from '@/@/components/ui/input'
 import {
@@ -29,6 +29,7 @@ import {
 import { Textarea } from '@/@/components/ui/textarea'
 import { Field, FieldLabel } from '@/@/components/ui/field'
 import { Button } from '@/@/components/ui/button'
+import { VisionUpload } from './upload-File'
 
 export function RegisterVaga() {
   const queryClient = useQueryClient()
@@ -188,11 +189,24 @@ export function RegisterVaga() {
   }
 
   return (
+    <div className='mb-2 gap-4 space-y-4 lg:w-2xl' >
+      <Card>
+        <CardHeader>
+          <CardTitle>Fazer upload da vaga</CardTitle>
+          <CardDescription>Envie uma imagem da vaga para realizar o cadastro</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div >
+            <VisionUpload />
+          </div>
+        </CardContent>
+      </Card>
+
     <div>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-      <Card className="lg:w-2xl h-70 overflow-auto">
+      <Card className="lg:w-2xl h-70 overflow-y-auto custom-scroll">
         <CardHeader>
-          <CardTitle>Cadastre uma nova vaga</CardTitle>
+          <CardTitle>Cadastrar vaga manualmente</CardTitle>
         </CardHeader>
 
         <CardContent>
@@ -417,5 +431,6 @@ export function RegisterVaga() {
         </CardContent>
       </Card>
     </div>
+     </div>
   )
 }
