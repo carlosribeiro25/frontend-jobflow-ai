@@ -214,7 +214,7 @@ export function RegisterVaga() {
               <Label htmlFor="title">Titulo</Label>
               <Input
                 required
-                className="mt-2"
+                className="mt-2 text-xs"
                 id="title"
                 type="text"
                 value={form.title}
@@ -223,7 +223,7 @@ export function RegisterVaga() {
               />
 
               <div className="grid grid-cols-2 justify-between sm:grid-cols-2 lg:grid-cols-3 mt-2">
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                   <Label htmlFor="tipo_vaga">Tipo: </Label>
                   <Select
                     required
@@ -249,8 +249,8 @@ export function RegisterVaga() {
                   </Select>
                 </div>
 
-                <div className="flex items-center">
-                  <span>Modalidade:</span>
+                <div className="flex flex-col sm:flex-row sm:items-center ">
+                  <Label>Modalidade:</Label>
                   <Select
                     required
                     value={form.modality ?? undefined}
@@ -261,10 +261,10 @@ export function RegisterVaga() {
                       }))
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="w-full min-w-0">
                       <SelectGroup>
                         {modalityOptions.map((item) => (
                           <SelectItem
@@ -279,17 +279,17 @@ export function RegisterVaga() {
                   </Select>
                 </div>
 
-                <div className="flex mt-2 md:mt-2 lg:mt-0">
-                  <Label htmlFor="category">Área: </Label>
+                <div className="flex flex-col sm:flex-row md:flex-col mt-2 md:mt-2 lg:mt-0 lg:ml-2">
+                  <Label htmlFor="category">Área:</Label>
                   <Select
                     required
                     value={form.category || undefined}
                     onValueChange={(value) => setForm((prev) => ({ ...prev, category: value }))}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent position="popper" align="start" className="w-full min-w-0">
                       <SelectGroup>
                         <SelectLabel>Selecione a área de atuação</SelectLabel>
                         {categoryOptions.map((item) => (
@@ -304,12 +304,27 @@ export function RegisterVaga() {
                     </SelectContent>
                   </Select>
                 </div>
+
+                <div className='mt-2 lg:hidden'>
+                  <Label htmlFor="salary">Salário:</Label>
+                <Input
+                  className="mt-0.5 text-xs"
+                  id="salary"
+                  name="salary"
+                  type="text"
+                  inputMode="numeric"
+                  value={salaryInput}
+                  onChange={handleSalaryChange}
+                  required
+                />
+                </div>
               </div>
+
 
               <div className="mt-2">
                 <Label htmlFor="description">Descrição:</Label>
                 <Input
-                  className="mt-2"
+                  className="mt-2 text-xs"
                   id="description"
                   name="description"
                   type="text"
@@ -326,6 +341,7 @@ export function RegisterVaga() {
                     value={form.requirements}
                     id="requirements"
                     name="requirements"
+                    className='text-xs'
                     placeholder="Requisitos da vaga"
                     onChange={(e) => setForm({ ...form, requirements: e.target.value })}
                     required
@@ -336,7 +352,7 @@ export function RegisterVaga() {
               <div className="mt-2">
                 <Label htmlFor="benefits">Beneficios:</Label>
                 <Input
-                  className="mt-2"
+                  className="mt-2 text-xs"
                   id="benefits"
                   name="benefits"
                   type="text"
@@ -350,7 +366,7 @@ export function RegisterVaga() {
               <div className="mt-2">
                 <Label htmlFor="contact">Contato:</Label>
                 <Input
-                  className="mt-2"
+                  className="mt-2 text-xs"
                   id="contact"
                   name="contact"
                   type="text"
@@ -364,7 +380,7 @@ export function RegisterVaga() {
               <div className="mt-2">
                 <Label htmlFor="location">Local da vaga :</Label>
                 <Input
-                  className="mt-2"
+                  className="mt-2 text-xs"
                   id="location"
                   name="location"
                   type="text"
@@ -378,7 +394,7 @@ export function RegisterVaga() {
               <div className="mt-2">
                 <Label htmlFor="link">URL da vaga :</Label>
                 <Input
-                  className="mt-2"
+                  className="mt-2 text-xs"
                   id="link"
                   name="link"
                   type="text"
@@ -391,7 +407,7 @@ export function RegisterVaga() {
               <div className="mt-2">
                 <Label htmlFor="company">Empresa :</Label>
                 <Input
-                  className="mt-2"
+                  className="mt-2 text-xs"
                   id="company"
                   name="company"
                   type="text"
@@ -402,10 +418,10 @@ export function RegisterVaga() {
                 />
               </div>
 
-              <div className="mt-2">
+              <div className="mt-2 hidden lg:block">
                 <Label htmlFor="salary">Salário:</Label>
                 <Input
-                  className="mt-2"
+                  className="mt-2 text-xs"
                   id="salary"
                   name="salary"
                   type="text"
@@ -415,7 +431,7 @@ export function RegisterVaga() {
                   required
                 />
               </div>
-              <div className="mt-2 flex justify-center gap-2">
+              <div className="mt-2 flex justify-center md:justify-center gap-2 lg:justify-center lg:gap-2">
                 <Button className="hover:bg-green-800 hover:text-amber-50" type="submit">
                   Enviar Cadastro
                 </Button>
