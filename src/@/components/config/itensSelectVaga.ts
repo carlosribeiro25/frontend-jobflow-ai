@@ -13,6 +13,11 @@ export type TipoCategotiasItem = {
   value: string | null
 }
 
+export type LocationItems = {
+  label: string
+  value: string | null
+}
+
 export const tipoVagas = [
   { label: 'Selecione', value: null },
   { label: 'CLT', value: 'CLT' },
@@ -23,7 +28,7 @@ export const tipoVagas = [
 
 export const tiposCategorias = [
   { label: 'Selecione', value: null },
-  { label: 'Administração', value: 'Administracao' },
+  { label: 'Administração', value: 'Administração' },
   { label: 'Comercial', value: 'Comercial' },
   { label: 'Contabilidade', value: 'Contabilidade' },
   { label: 'Dev de software', value: 'Desenvolvimento de software' },
@@ -42,11 +47,25 @@ export const tiposCategorias = [
   { label: 'Tecnologia', value: 'Tecnologia' },
   { label: 'Vendas', value: 'Vendas' },
 ]
-// .enum(['Remoto', 'Hibrido', 'Presencial', 'Home Office'])
+
 export const modality = [
   { label: 'Selecione', value: null },
   { label: 'Home Office', value: 'Home Office' },
   { label: 'Remoto', value: 'Remoto' },
   { label: 'Hibrido', value: 'Hibrido' },
   { label: 'Presencial', value: 'Presencial' },
+]
+
+export const location = [
+  { label: 'Selecione', value: null },
+  { label: 'Cambeba Fortaleza-CE', value: 'Cambeba' },
+  { label: 'Caucaia Fortaleza-CE', value: 'Caucaia' },
+  { label: 'Centro Fortaleza-CE', value: 'Centro' },
+  { label: 'Cidade dos Funcionários Fortaleza-CE', value: 'Cidade dos Funcionários' },
+  { label: 'Dionísio Torres Fortaleza-CE', value: 'Dionísio Torres' },
+  { label: 'Edson Queiroz Fortaleza-CE', value: 'Edson Queiroz' },
+  { label: 'Fortaleza-CE', value: 'Fortaleza-CE' },
+  { label: 'Messejana-CE', value: 'Messejana' },
+  { label: 'Mucuripe Fortaleza-CE', value: 'Mucuripe' },
+  { label: 'São Paulo-SP', value: 'São Paulo' },
 ]
