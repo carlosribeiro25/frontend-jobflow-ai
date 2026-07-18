@@ -13,7 +13,7 @@ export function CardVagas({ vaga }: CardVagsProps) {
 
   return (
     <Card key={vaga.id}>
-      <CardContent className="space-y-2 ">
+      <CardContent className="space-y-2">
         <div className="flex justify-between mb-4">
           <h1 className="text-emerald-300">{vaga.title}</h1>
           <button
