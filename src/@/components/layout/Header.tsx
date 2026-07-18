@@ -12,8 +12,12 @@ import { SidebarTrigger } from '../ui/sidebar'
 import { SearchVagas } from '../Vagas/SearchVagas'
 
 import SearchIcon from '@mui/icons-material/Search'
+import TuneIcon from '@mui/icons-material/Tune'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { AvatarMenu } from './AvatarDropdown'
+import { FilterFormField } from '../Vagas/FilterFormFields'
+import { useFilterContext } from '@/modules/auth/context/filter-context-base'
+import { useLocation } from 'react-router-dom'
 
 type AppHeaderProps = {
   search: string
@@ -22,8 +26,12 @@ type AppHeaderProps = {
 }
 
 export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) {
+  const { isSheetOpen, setIsSheetOpen } = useFilterContext()
+  const location = useLocation()
+  const isFiltersPage = location.pathname === '/filtros'
+
   return (
-    <div className="">
+    <div>
       <header className=" inset-x-0 top-0 z-50 flex h-16 w-full items-center justify-between border-b bg-background/95 px-4 backdrop-blur supports-backdrop-filter]:bg-background/60">
         <div className="flex items-center gap-2">
           <div className="md:hidden">
@@ -36,7 +44,31 @@ export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) 
           <SearchVagas value={search} onChange={onSearchChange} onSearch={onSearch} />
         </div>
 
-        <div className="flex justify-between items-center gap-2">
+        <div className="flex justify-between items-center gap-2 ">
+          {/* Botão de filtros — visível apenas no mobile e na página de filtros */}
+          {isFiltersPage && (
+            <div className="md:hidden">
+              <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+                <SheetTrigger asChild>
+                  <button type="button" aria-label="Abrir filtros">
+                    <TuneIcon />
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="top" className="overflow-y-auto">
+                  <SheetHeader>
+                    <SheetTitle>Buscar vagas por filtro</SheetTitle>
+                    <VisuallyHidden>
+                      <SheetDescription>Formulário de filtros de vagas</SheetDescription>
+                    </VisuallyHidden>
+                  </SheetHeader>
+                  <div className="p-4">
+                    <FilterFormField />
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          )}
+
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden ">
