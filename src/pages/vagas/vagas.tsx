@@ -204,7 +204,7 @@ export function RegisterVaga() {
 
       <div>
         <ToastContainer toasts={toasts} removeToast={removeToast} />
-        <Card className="lg:w-2xl h-70 overflow-y-auto custom-scroll">
+        <Card className="lg:w-2xl h-72 md:h-93 lg:h-78 overflow-y-auto custom-scroll">
           <CardHeader>
             <CardTitle>Cadastrar vaga manualmente</CardTitle>
           </CardHeader>
@@ -222,9 +222,11 @@ export function RegisterVaga() {
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
               />
 
-              <div className="grid grid-cols-2 justify-between sm:grid-cols-2 lg:grid-cols-3 mt-2">
+              <div className="grid grid-cols-2 justify-between sm:grid-cols-2 lg:grid-cols-3 mt-2 ">
                 <div className="flex flex-col sm:flex-row">
-                  <Label htmlFor="tipo_vaga">Tipo: </Label>
+                  <Label htmlFor="tipo_vaga" className="md:mr-1 lg:mr-0">
+                    Tipo:{' '}
+                  </Label>
                   <Select
                     required
                     value={form.tipo_vaga || undefined}
@@ -250,7 +252,7 @@ export function RegisterVaga() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-center ">
-                  <Label>Modalidade:</Label>
+                  <Label className="md:mr-1 lg:mr-0">Modalidade:</Label>
                   <Select
                     required
                     value={form.modality ?? undefined}
@@ -279,7 +281,7 @@ export function RegisterVaga() {
                   </Select>
                 </div>
 
-                <div className="flex flex-col sm:flex-row md:flex-col mt-2 md:mt-2 lg:mt-0 lg:ml-2">
+                <div className="flex flex-col mt-2 lg:mt-0 lg:flex-row lg:ml-2">
                   <Label htmlFor="category">Área:</Label>
                   <Select
                     required
@@ -305,21 +307,21 @@ export function RegisterVaga() {
                   </Select>
                 </div>
 
-                <div className='mt-2 lg:hidden'>
+                <div className="mt-2 lg:hidden">
                   <Label htmlFor="salary">Salário:</Label>
-                <Input
-                  className="mt-0.5 text-xs"
-                  id="salary"
-                  name="salary"
-                  type="text"
-                  inputMode="numeric"
-                  value={salaryInput}
-                  onChange={handleSalaryChange}
-                  required
-                />
+                  <Input
+                    className="mt-0.5 text-xs"
+                    id="salary"
+                    name="salary"
+                    type="text"
+                    inputMode="numeric"
+                    value={salaryInput}
+                    onChange={handleSalaryChange}
+                    placeholder="Informe um valor em reais"
+                    required
+                  />
                 </div>
               </div>
-
 
               <div className="mt-2">
                 <Label htmlFor="description">Descrição:</Label>
@@ -341,7 +343,7 @@ export function RegisterVaga() {
                     value={form.requirements}
                     id="requirements"
                     name="requirements"
-                    className='text-xs'
+                    className="text-xs"
                     placeholder="Requisitos da vaga"
                     onChange={(e) => setForm({ ...form, requirements: e.target.value })}
                     required
