@@ -33,9 +33,19 @@ export async function uploadVisionImage(file: File) {
         'Content-Type': 'multipart/form-data',
       },
     })
+
     return data
   } catch (error) {
     const axiosError = error as AxiosError<{ error?: string; message?: string }>
+
+    if (axiosError.response?.status === 400) {
+      const message =
+        axiosError.response?.data?.message ??
+        axiosError.response?.data?.error ??
+        'Nenhum arquivo foi enviado'
+      throw new Error(message, { cause: error })
+    }
+
     const message =
       axiosError.response?.data?.message ??
       axiosError.response?.data?.error ??

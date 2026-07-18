@@ -1,4 +1,4 @@
-export type Modality = 'Remote' | 'Hibrido' | 'Presencial' | 'Home Office'
+export type Modality = 'Remoto' | 'Hibrido' | 'Presencial' | 'Home Office'
 
 export interface Vaga {
   id: number
