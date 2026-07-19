@@ -12,7 +12,7 @@ import { ListVagas } from '@/@/components/Vagas/ListVagas'
 import AppLayout from '@/@/components/layout/Layout'
 import Filters from '@/pages/filters/Filters'
 import { PageDetailVaga } from '@/@/components/Vagas/VagaDetail'
-import { RegisterVaga } from '@/pages/vagas/vagas'
+import { RegisterVaga } from '@/pages/vagas/RegisterVagas'
 
 export default function AppRoutes() {
   return (
