@@ -29,7 +29,7 @@ import {
 import { Textarea } from '@/@/components/ui/textarea'
 import { Field, FieldLabel } from '@/@/components/ui/field'
 import { Button } from '@/@/components/ui/button'
-import { VisionUpload } from './upload-File'
+import { ImageUpload } from './imageUpload'
 
 export function RegisterVaga() {
   const queryClient = useQueryClient()
@@ -41,6 +41,7 @@ export function RegisterVaga() {
   const typeVagaOptions = tipoVagas.filter((item): item is TipoVagasItem => item.value !== null)
   const [salaryValue, setSalaryValue] = useState<number | undefined>()
   const [salaryInput, setSalaryInput] = useState('')
+  const [imageFile, setImageFile] = useState<File | null>(null)
   const salaryDigitsRef = useRef('')
 
   const [form, setForm] = useState<RegisterVagaPayload>({
@@ -197,7 +198,7 @@ export function RegisterVaga() {
         </CardHeader>
         <CardContent>
           <div>
-            <VisionUpload />
+            <ImageUpload file={imageFile} onChange={setImageFile} />
           </div>
         </CardContent>
       </Card>
