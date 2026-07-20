@@ -21,7 +21,7 @@ const Filters = () => {
       </div>
 
       <div className="flex-1">
-        {isLoading && hasFilters && <CircularProgress />}
+        {isLoading && <CircularProgress />}
         {isError && <p>Erro ao buscar vagas com o filtro aplicado</p>}
 
         {!isLoading && !isError && hasFilters && data?.vagas.length === 0 && (
