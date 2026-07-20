@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { FilteredVagas } from '@/routes/routesApi/filter-vagas'
+import { fetchVagas } from '@/routes/routesApi/Vagas'
 import type { FilteredVagasPayload } from '@/types/filters-vagas'
 import type { Modality } from '@/types/vaga'
 import { FilterContext } from './filter-context-base'
@@ -44,12 +45,27 @@ export function FilterProvider({ children }: { children: React.ReactNode }) {
     !!applied.tipo_vaga ||
     !!applied.publisheAt
 
-  const { data, isLoading, isError } = useQuery({
+  const { data: defaultData, isLoading: defaultIsLoading } = useQuery({
+    queryKey: ['vagas', 'default', page],
+    queryFn: () => fetchVagas('', page, pageSize),
+    enabled: !hasFilters,
+    placeholderData: keepPreviousData,
+  })
+
+  const {
+    data: filteredData,
+    isLoading: filteredIsLoading,
+    isError,
+  } = useQuery({
     queryKey: ['vagas', 'filter', payload, page],
     queryFn: () => FilteredVagas(payload),
     enabled: hasFilters,
+    placeholderData: keepPreviousData,
     retry: false,
   })
+
+  const data = hasFilters ? filteredData : defaultData
+  const isLoading = hasFilters ? filteredIsLoading : defaultIsLoading
 
   const hasMore = data?.hasMore ?? false
 
