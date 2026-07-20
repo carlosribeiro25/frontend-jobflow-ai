@@ -25,7 +25,7 @@ function notFound(error: unknown): boolean {
 export async function fetchVagas(q: string, page: number, limit = LIMIT): Promise<VagasResult> {
   try {
     const { data } = await api.get<VagasApiResponse>('/vagas', {
-      params: { q, page, limit: LIMIT },
+      params: { q, page, limit: limit },
     })
     return {
       vagas: data.vagas,
