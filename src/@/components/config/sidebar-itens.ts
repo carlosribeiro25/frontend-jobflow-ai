@@ -6,7 +6,7 @@ import UnarchiveIcon from '@mui/icons-material/Unarchive'
 export const sidebarItens = [
   {
     title: 'Home',
-    path: '/filtros',
+    path: '/vagas-filtros',
     icon: HomeFilledIcon,
   },
   {

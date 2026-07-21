@@ -5,7 +5,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 export const itensNavMobile = [
   {
     label: 'Home',
-    path: '/filtros',
+    path: '/vagas-filtros',
     icon: HomeFilledIcon,
   },
   {

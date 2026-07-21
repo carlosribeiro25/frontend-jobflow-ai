@@ -1,21 +1,62 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { Vaga } from '@/types/vaga'
 import { getVagasId } from '@/routes/routesApi/GetVagaById'
 import { Spinner } from '../ui/spinner'
 import { Card, CardContent } from '../ui/card'
+import { DeleteDialog } from './DialogDelete'
+import { deleteVagaByID } from '@/routes/routesApi/delete-vagas'
+import { useToast } from '@/modules/auth/hooks/useToast'
+import { ToastContainer } from '../ui/toast-container'
+import { useNavigate } from 'react-router-dom'
 
 export function PageDetailVaga() {
+  const { toasts, addToast, removeToast } = useToast()
   const { id } = useParams<{ id: string }>()
-
+  const queryClient = useQueryClient()
+  const [confirmOpen, setConfirOpen] = useState(false)
+  const [deleteVaga, setDeleteVagas] = useState<number | null>(null)
   const [vaga, setVaga] = useState<Vaga | null>(null)
   const [loading, setLoading] = useState<boolean>(Boolean(id))
   const [error, setError] = useState<boolean>(false)
+  const navigate = useNavigate()
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteVagaByID(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['vagas'] })
+      setConfirOpen(false)
+      addToast({
+        message: 'Vaga deletada com sucesso',
+        type: 'success',
+        duration: 3000
+      })
+      setTimeout(() => navigate('/filtros'), 3000)
+    },
+    onError: () => {
+      addToast({
+        message: 'Erro ao deletar vaga',
+        type: 'error',
+        duration: 3000
+      })
+    }
+  })
+
+  const handleDelete = (id: number) => {
+    setDeleteVagas(id)
+    setConfirOpen(true)
+  }
+
+  const handleConfirmDelete = () => {
+    deleteMutation.mutate(deleteVaga as number)
+  }
+
+  //
 
   useEffect(() => {
     async function loadVaga(id?: number) {
       if (id == null || Number.isNaN(id)) {
-        console.warn('loadVaga called without valid id')
         setError(true)
         setLoading(false)
         return
@@ -57,6 +98,8 @@ export function PageDetailVaga() {
 
   return (
     <div>
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
+
       {loading && (
         <div className="flex items-center gap-2">
           <Spinner className="size-6" />
@@ -67,7 +110,16 @@ export function PageDetailVaga() {
       <div className="w-full md:w-md lg:w-md gap-4  lg:p-2 ">
         <Card>
           <CardContent>
-            <h1 className="text-emerald-300">{vaga.title}</h1>
+            <div className='flex justify-between '>
+              <h1 className="text-emerald-300">{vaga.title}</h1>
+              <DeleteDialog
+                open={confirmOpen}
+                onOpen={() => handleDelete(vaga.id)}
+                onClose={() => setConfirOpen(false)}
+                onConfirm={handleConfirmDelete}
+                isPending={deleteMutation.isPending}
+              />
+            </div>
             <p>{vaga.description}</p>
             <p>Vaga do tipo {vaga.tipo_vaga}</p>
             <p>Categoria {vaga.category}</p>

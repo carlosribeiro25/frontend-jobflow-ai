@@ -28,7 +28,7 @@ type AppHeaderProps = {
 export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) {
   const { isSheetOpen, setIsSheetOpen } = useFilterContext()
   const location = useLocation()
-  const isFiltersPage = location.pathname === '/filtros'
+  const isFiltersPage = location.pathname === '/vagas-filtros'
 
   return (
     <div>
@@ -45,6 +45,7 @@ export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) 
         </div>
 
         <div className="flex justify-between items-center gap-2 ">
+
           {/* Botão de filtros — visível apenas no mobile e na página de filtros */}
           {isFiltersPage && (
             <div className="md:hidden">
