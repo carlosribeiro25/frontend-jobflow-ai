@@ -1,11 +1,13 @@
 import { createContext, useContext } from 'react'
+import type { UserRole } from '@/types/type-user'
 
 export interface AuthUserData {
+  id: number
   email: string
   name: string
   phone?: string
   picture?: string
-  role?: string
+  role: UserRole
 }
 
 export interface AuthSession {
