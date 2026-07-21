@@ -45,7 +45,6 @@ export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) 
         </div>
 
         <div className="flex justify-between items-center gap-2 ">
-
           {/* Botão de filtros — visível apenas no mobile e na página de filtros */}
           {isFiltersPage && (
             <div className="md:hidden">

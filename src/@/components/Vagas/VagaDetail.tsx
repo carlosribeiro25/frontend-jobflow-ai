@@ -30,7 +30,7 @@ export function PageDetailVaga() {
       addToast({
         message: 'Vaga deletada com sucesso',
         type: 'success',
-        duration: 3000
+        duration: 3000,
       })
       setTimeout(() => navigate('/filtros'), 3000)
     },
@@ -38,9 +38,9 @@ export function PageDetailVaga() {
       addToast({
         message: 'Erro ao deletar vaga',
         type: 'error',
-        duration: 3000
+        duration: 3000,
       })
-    }
+    },
   })
 
   const handleDelete = (id: number) => {
@@ -110,7 +110,7 @@ export function PageDetailVaga() {
       <div className="w-full md:w-md lg:w-md gap-4  lg:p-2 ">
         <Card>
           <CardContent>
-            <div className='flex justify-between '>
+            <div className="flex justify-between ">
               <h1 className="text-emerald-300">{vaga.title}</h1>
               <DeleteDialog
                 open={confirmOpen}

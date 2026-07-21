@@ -75,10 +75,10 @@ export default function Login() {
         picture: data.user.picture,
         email: data.user.email,
         phone: data.user.phone,
-        role: data.user.role
+        role: data.user.role,
       })
 
-      console.log('dados do usuario',accessToken )
+      console.log('dados do usuario', accessToken)
 
       Cookies.set('token', accessToken)
 

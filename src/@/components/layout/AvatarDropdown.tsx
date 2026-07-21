@@ -33,7 +33,9 @@ export function AvatarMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56 mt-3">
         <DropdownMenuLabel className="flex flex-col gap-0.5 ">
-          <span className="text-sm text-muted-foreground font-semibold">{userData?.role ?? ''}</span>
+          <span className="text-sm text-muted-foreground font-semibold">
+            {userData?.role ?? ''}
+          </span>
           <span className="font-normal">{userData?.name ?? 'Usuário'}</span>
           <span className="text-xs text-muted-foreground font-normal">{userData?.email ?? ''}</span>
         </DropdownMenuLabel>

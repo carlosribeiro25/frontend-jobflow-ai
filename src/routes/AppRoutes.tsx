@@ -29,7 +29,7 @@ export default function AppRoutes() {
           <Route path="/vagas" element={<ListVagas />} />
           <Route path="/cadastrar-vagas" element={<RegisterVaga />} />
           <Route path="/vagas/:id" element={<PageDetailVaga />} />
-          <Route path="/filtros" element={<Filters />} />
+          <Route path="/vagas-filtros" element={<Filters />} />
           <Route path="/settings" element={<SettingsApp />} />
           <Route path="/conectWhatsapp" element={<WhatsappConnect />} />
         </Route>

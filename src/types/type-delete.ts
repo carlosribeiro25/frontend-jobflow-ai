@@ -1,3 +1,3 @@
 export interface DeleteVagasResponse {
-    messagge?: string
+  messagge?: string
 }
