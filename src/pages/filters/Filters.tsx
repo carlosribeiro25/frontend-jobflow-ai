@@ -12,7 +12,7 @@ const Filters = () => {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mb-14 md:mb-0">
       <div className="hidden md:block shrink-0">
-        <Card className="w-70">
+        <Card className="w-70 ">
           <CardHeader>Buscar vagas por filtros</CardHeader>
           <CardContent>
             <FilterFormField />
@@ -20,7 +20,7 @@ const Filters = () => {
         </Card>
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 ">
         {isLoading && <CircularProgress />}
         {isError && <p>Erro ao buscar vagas com o filtro aplicado</p>}
 
