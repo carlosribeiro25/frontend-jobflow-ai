@@ -10,6 +10,7 @@ import { deleteVagaByID } from '@/routes/routesApi/delete-vagas'
 import { useToast } from '@/modules/auth/hooks/useToast'
 import { ToastContainer } from '../ui/toast-container'
 import { useNavigate } from 'react-router-dom'
+import { usePermissions } from '@/modules/auth/hooks/use-permition'
 
 export function PageDetailVaga() {
   const { toasts, addToast, removeToast } = useToast()
@@ -22,6 +23,8 @@ export function PageDetailVaga() {
   const [error, setError] = useState<boolean>(false)
   const navigate = useNavigate()
 
+  const { isManager } = usePermissions()
+
   const deleteMutation = useMutation({
     mutationFn: (id: number) => deleteVagaByID(id),
     onSuccess: () => {
@@ -32,7 +35,7 @@ export function PageDetailVaga() {
         type: 'success',
         duration: 3000,
       })
-      setTimeout(() => navigate('/filtros'), 3000)
+      setTimeout(() => navigate('/vagas-filtros'), 3000)
     },
     onError: () => {
       addToast({
@@ -51,8 +54,6 @@ export function PageDetailVaga() {
   const handleConfirmDelete = () => {
     deleteMutation.mutate(deleteVaga as number)
   }
-
-  //
 
   useEffect(() => {
     async function loadVaga(id?: number) {
@@ -112,13 +113,16 @@ export function PageDetailVaga() {
           <CardContent>
             <div className="flex justify-between ">
               <h1 className="text-emerald-300">{vaga.title}</h1>
-              <DeleteDialog
-                open={confirmOpen}
-                onOpen={() => handleDelete(vaga.id)}
-                onClose={() => setConfirOpen(false)}
-                onConfirm={handleConfirmDelete}
-                isPending={deleteMutation.isPending}
-              />
+
+              {isManager && (
+                <DeleteDialog
+                  open={confirmOpen}
+                  onOpen={() => handleDelete(vaga.id)}
+                  onClose={() => setConfirOpen(false)}
+                  onConfirm={handleConfirmDelete}
+                  isPending={deleteMutation.isPending}
+                />
+              )}
             </div>
             <p>{vaga.description}</p>
             <p>Vaga do tipo {vaga.tipo_vaga}</p>

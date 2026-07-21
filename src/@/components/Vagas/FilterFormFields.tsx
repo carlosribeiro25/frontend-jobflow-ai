@@ -42,7 +42,7 @@ export function FilterFormField() {
   )
 
   return (
-    <form className="-mt-7 lg:mt-0 " onSubmit={handleSubmit}>
+    <form className="-mt-7 lg:mt-0 bg-amber p-4 lg:p-0 " onSubmit={handleSubmit}>
       <div className="flex  mb-2  justify-between">
         <div className="">
           <Label htmlFor="tipo_vaga" className="lg:mb-1">
@@ -94,18 +94,18 @@ export function FilterFormField() {
 
       <div>
         <Label htmlFor="category" className="lg:mb-1">
-          Area:
+          Área:
         </Label>
         <Select
           value={form.category || ''}
           onValueChange={(value) => setForm((prev) => ({ ...prev, category: value }))}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Area de atuacao" />
+            <SelectValue placeholder="Area de atuação" />
           </SelectTrigger>
           <SelectContent position="popper" align="start" className="w-full min-w-0 h-60">
             <SelectGroup>
-              <SelectLabel>Selecione a area de atuacao</SelectLabel>
+              <SelectLabel>Selecione a area de atuação</SelectLabel>
               {categoryOptions.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.label}
@@ -118,7 +118,7 @@ export function FilterFormField() {
 
       <div className="mt-2">
         <Label htmlFor="location" className="lg:mb-1">
-          Localizacao:
+          Localização:
         </Label>
         <Select
           value={form.location || ''}
@@ -129,7 +129,7 @@ export function FilterFormField() {
           </SelectTrigger>
           <SelectContent position="popper" align="start" className="w-full min-w-0 h-60">
             <SelectGroup>
-              <SelectLabel>Selecione uma localizacao</SelectLabel>
+              <SelectLabel>Selecione uma localizção</SelectLabel>
               {locationOptions.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.label}
@@ -141,7 +141,7 @@ export function FilterFormField() {
       </div>
 
       <div className="mt-2">
-        <Label className="mb-1">Data de publicacao:</Label>
+        <Label className="mb-1">Data de publicação:</Label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
