@@ -64,7 +64,7 @@ export const location = [
   { label: 'Cidade dos Funcionários Fortaleza-CE', value: 'Cidade dos Funcionários' },
   { label: 'Dionísio Torres Fortaleza-CE', value: 'Dionísio Torres' },
   { label: 'Edson Queiroz Fortaleza-CE', value: 'Edson Queiroz' },
-  { label: 'Fortaleza-CE', value: 'Fortaleza-CE' },
+  { label: 'Fortaleza-CE', value: 'Fortaleza' },
   { label: 'Messejana-CE', value: 'Messejana' },
   { label: 'Mucuripe Fortaleza-CE', value: 'Mucuripe' },
   { label: 'São Paulo-SP', value: 'São Paulo' },
