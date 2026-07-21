@@ -5,6 +5,7 @@ export interface AuthUserData {
   name: string
   phone?: string
   picture?: string
+  role?: string
 }
 
 export interface AuthSession {
