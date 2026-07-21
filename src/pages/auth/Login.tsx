@@ -1,5 +1,6 @@
 import { useAuth } from '@/modules/auth/context/auth-context'
 import { login as loginRequest } from '@/modules/auth/services/login'
+import type { UserRole } from '@/types/type-user'
 import { AxiosError } from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import React, { useRef, useState } from 'react'
@@ -24,11 +25,12 @@ interface LoginResponse {
   token?: string
   accessToken?: string
   user: {
+    id: number
     email: string
     name: string
     phone?: string
     picture?: string
-    role?: string
+    role?: UserRole
   }
 }
 
@@ -71,18 +73,19 @@ export default function Login() {
       }
 
       login(accessToken, {
+        id: data.user.id,
         name: data.user.name,
         picture: data.user.picture,
         email: data.user.email,
         phone: data.user.phone,
-        role: data.user.role,
+        role: data.user?.role ?? 'user',
       })
 
-      console.log('dados do usuario', accessToken)
+      console.log(data.user)
 
       Cookies.set('token', accessToken)
 
-      navigate('/')
+      navigate('/vagas-filtros')
     } catch (error: unknown) {
       const apiError =
         error instanceof AxiosError
