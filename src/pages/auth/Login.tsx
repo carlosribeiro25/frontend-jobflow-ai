@@ -28,6 +28,7 @@ interface LoginResponse {
     name: string
     phone?: string
     picture?: string
+    role?: string
   }
 }
 
@@ -74,7 +75,10 @@ export default function Login() {
         picture: data.user.picture,
         email: data.user.email,
         phone: data.user.phone,
+        role: data.user.role
       })
+
+      console.log('dados do usuario',accessToken )
 
       Cookies.set('token', accessToken)
 
