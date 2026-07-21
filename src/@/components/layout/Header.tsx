@@ -54,14 +54,17 @@ export function AppHeader({ search, onSearchChange, onSearch }: AppHeaderProps) 
                     <TuneIcon />
                   </button>
                 </SheetTrigger>
-                <SheetContent side="top" className="overflow-y-auto">
+                <SheetContent
+                  side="top"
+                  className="overflow-y-auto justify-center mt-10  w-80 m-8 rounded-xl"
+                >
                   <SheetHeader>
-                    <SheetTitle>Buscar vagas por filtro</SheetTitle>
+                    <SheetTitle className="font-semibold ">Aplicar filtros</SheetTitle>
                     <VisuallyHidden>
                       <SheetDescription>Formulário de filtros de vagas</SheetDescription>
                     </VisuallyHidden>
                   </SheetHeader>
-                  <div className="p-4">
+                  <div className="p-2">
                     <FilterFormField />
                   </div>
                 </SheetContent>
