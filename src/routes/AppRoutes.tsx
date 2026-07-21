@@ -24,7 +24,7 @@ export default function AppRoutes() {
 
       <Route element={<PrivateRoute />}>
         <Route element={<AppLayout />}>
-          <Route index element={<HomePage />} />
+          <Route path="/vagas-filtros" element={<HomePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/vagas" element={<ListVagas />} />
           <Route path="/cadastrar-vagas" element={<RegisterVaga />} />

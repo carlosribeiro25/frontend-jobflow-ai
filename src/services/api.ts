@@ -21,6 +21,29 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+let isRefreshing = false
+let failedQueue: Array<{
+  resolve: (token: string) => void
+  reject: (error: unknown) => void
+}> = []
+
+function processQueue(error: unknown, token: string | null = null) {
+  for (const { resolve, reject } of failedQueue) {
+    if (error) {
+      reject(error)
+    } else {
+      resolve(token!)
+    }
+  }
+  failedQueue = []
+}
+
+function redirectToLogin() {
+  Cookies.remove('token')
+  Cookies.remove('user')
+  window.location.href = '/login'
+}
+
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -32,32 +55,50 @@ api.interceptors.response.use(
     }
 
     if (requestUrl === '/refresh') {
-      Cookies.remove('token')
-      window.location.href = '/login'
+      processQueue(error, null)
+      isRefreshing = false
+      redirectToLogin()
       return Promise.reject(error)
     }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
 
+      if (isRefreshing) {
+        return new Promise<string>((resolve, reject) => {
+          failedQueue.push({ resolve, reject })
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`
+            return api(originalRequest)
+          })
+          .catch((err) => Promise.reject(err))
+      }
+
+      isRefreshing = true
+
       try {
         const response = await api.post('/refresh')
         const newAccessToken = response.data?.accessToken ?? response.data?.token
 
         if (!newAccessToken) {
-          Cookies.remove('token')
-          window.location.href = '/login'
+          processQueue(new Error('No token in refresh response'), null)
+          isRefreshing = false
+          redirectToLogin()
           return Promise.reject(error)
         }
 
         Cookies.set('token', newAccessToken)
         api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+        processQueue(null, newAccessToken)
+        isRefreshing = false
 
         return api(originalRequest)
       } catch (refreshError) {
-        Cookies.remove('token')
-        window.location.href = '/login'
+        processQueue(refreshError, null)
+        isRefreshing = false
+        redirectToLogin()
         return Promise.reject(refreshError)
       }
     }
